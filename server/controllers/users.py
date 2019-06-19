@@ -15,14 +15,11 @@ def create():
     # @A1aaaaa
     alerts = User.validate(request.form)
     if len(alerts) > 0:
-        print(len(alerts))
         if len(alerts) == 5:
-            print(len(alerts))
             flash('All fields are required!')
             # return redirect('/user/register')
             return render_template('/partials/alerts.html'), 500   
         else:
-            print(len(alerts))
             for alert in alerts:
                 flash(alert)
             # return redirect('/user/register') 
