@@ -1,12 +1,25 @@
 {% extends './layout.html' %}
 {% block title %}Celso Chaves Portfolio {% endblock %}
 {% block body %}
-    <div class="view" style="background-image: url('/static/img/background1.jpg'); background-repeat: no-repeat; background-size: cover;">
-        <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
-            <div class="text-center white-text mx-5 wow fadeIn">
-                <h1 class="mb-4 wow zoomIn"><strong>Hello, Welcome!</strong></h1>
-                <h2> <strong>Duff & Chaves</strong> Group Project App</h2>
+    <div id="carousel-example-2" class="carousel slide carousel-fade" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
+                <div class="view">
+                    <video autoplay loop playsinline muted>
+                        <source src="{{ url_for('static',filename='mov/home_intro.mp4') }}" type="video/mp4" />
+                    </video>
+                    <div class="full-bg-img flex-center mask rgba-black-light white-text">
+                        <ul class="animated fadeInUp col-md-12 list-unstyled">
+                            <li>
+                                <h1 class="font-weight-bold text-uppercase">Band Site for CoolBand!</h1>
+                            </li>
+                            <li>
+                                <a target="_blank" href="/listen" class="btn btn-pink btn-rounded btn-lg">Start Listening</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </div>    
-    </div>  
+        </div>
+    </div>
 {% endblock %}
