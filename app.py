@@ -1,5 +1,5 @@
 from config import app, db
-from server.routes import users, dashboard
+from server.routes import users, dashboard, items, tours, songs
 # from server.models import items, orders, users, addresses, tours, orders_items
 
 

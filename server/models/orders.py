@@ -2,7 +2,6 @@ from config import db
 from sqlalchemy.sql import func
 from server.models.users import User
 from server.models.addresses import Address
-from server.models.items import Item
 from server.models.orders_items import orders_items
 
 class Order(db.Model):
