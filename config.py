@@ -10,7 +10,7 @@ app = Flask(__name__)
 bcrypt = Bcrypt(app)
 app.secret_key="super super secret"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///demo.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///demo_band.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 ROOT_DIR = os.path.dirname(__file__)

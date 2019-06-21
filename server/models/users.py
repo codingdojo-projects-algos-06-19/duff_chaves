@@ -1,6 +1,7 @@
 from config import db, bcrypt
 from sqlalchemy.sql import func
 import re
+from server.models.addresses import Address
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
@@ -11,9 +12,15 @@ class User(db.Model):
     last_name = db.Column(db.String(45), nullable=False)
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, server_default=func.now())        # notice the extra import statement above
+    approval_id = db.Column(db.Integer, server_default='1')
+    created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
-    
+    # Relationships Below
+    # One Address to Many User
+    # fkey_user_address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'), nullable=False) # Tested and Working
+    # fkey_user_address = db.relationship('Address', foreign_keys=['fkey_user_address_id'], backref="fkey_user_address_backref", cascade="all") # Tested and Working
+
+
     @classmethod
     def validate(cls, form):
         print(form)
