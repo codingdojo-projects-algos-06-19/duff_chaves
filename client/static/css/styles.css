@@ -53,3 +53,6 @@
 .login-input {
   width: 300px;
 }
+audio {
+  background: transparent !important;
+}

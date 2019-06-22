@@ -1,3 +1,4 @@
+from flask import session
 from config import db, bcrypt
 from sqlalchemy.sql import func
 import re
@@ -17,8 +18,9 @@ class User(db.Model):
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
     # Relationships Below
     # One Address to Many User
-    # fkey_user_address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'), nullable=False) # Tested and Working
-    # fkey_user_address = db.relationship('Address', foreign_keys=['fkey_user_address_id'], backref="fkey_user_address_backref", cascade="all") # Tested and Working
+    fkey_user_address_id = db.Column(db.Integer, db.ForeignKey(Address.id)) # Tested and Working
+    fkey_user_address = db.relationship('Address', foreign_keys=[fkey_user_address_id], backref=db.backref("fkey_user_address_backref", cascade="all")) # Tested and Working
+    # user              = db.relationship('User',  foreign_keys=[user_id],              backref=db.backref("tweets", cascade="all, delete-orphan"))
 
 
     @classmethod
@@ -43,14 +45,14 @@ class User(db.Model):
             alerts.append('The email address field is required!')
         elif not EMAIL_REGEX.match(form['email']):
             alerts.append('Invalid email address!')
-                  
+
         if len(form['password']) < 1:
             alerts.append('The password cannot be blank!')
         elif len(form['password']) < 8:
             alerts.append('The password needs to be at least 8 characters')
         elif not re.match(r"^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[@#$])[\w\d@#$]{6,12}$", form['password']):
             alerts.append('The confirmed password must contain a number, a special character, upper and lowercase!')
-        
+
         if len(form['password2']) < 1:
             alerts.append('The confirmed password cannot be blank!')
 

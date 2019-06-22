@@ -17,6 +17,22 @@ $(document).ready(function() {
             }
         })
     });
+    $('#user-update-form').submit(function(e) {
+        e.preventDefault()
+        $.ajax({
+            url: '/user/update/' + CURRENT_USER_ID,
+            method: 'POST',
+            data: $('#user-update-form').serialize(),
+            success: function(alerts) {
+                console.log('SUCCESS')
+                $("#alerts").html(alerts)
+            },
+            error: function(data) {
+                console.log('ERROR')
+                $("#alerts").html(data.responseText)
+            }
+        })
+    });
     (function () {
         'use strict';
         window.addEventListener('load', function () {
@@ -53,7 +69,30 @@ $(document).ready(function() {
             }
         })
     })
-    // (function () {
+    $.get('/player', function(player_html){
+        console.log('PLAYER: ', player_html)
+        $('#player').html('<audio controls src="' + player_html + '"></audio>');
+    });
+    // SC.initialize({
+    //     client_id: 'FvkgucGq5QyPAepKyYOUkjEQq2zLVKPb'
+    //   });      
+    // //   SC.get('/tracks', {
+    // //     genres: 'punk', bpm: { from: 120 }
+    // //   }).then(function(tracks) {
+    // //     console.log(tracks);
+    // //   });
+    // SC.initialize({
+    //     client_id: 'FvkgucGq5QyPAepKyYOUkjEQq2zLVKPb'
+    //   });
+    //   // stream track id 293
+    // //   SC.stream('/tracks/293').then(function(player){
+    // //     player.play().then(function(){
+    // //       console.log('Playback started!');
+    // //     }).catch(function(e){
+    // //       console.error('Playback rejected. Try calling play() from a user interaction.', e);
+    // //     });
+    // //   });
+    // // (function () {
     //     'use strict';
     //     window.addEventListener('load', function () {
     //         console.log('LOADING...')

@@ -18,5 +18,5 @@ class Item(db.Model):
     orders_for_items = db.relationship('Order', secondary=orders_items) # Tested and Working
     # One User to Many Item
     fkey_item_user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False) # Tested and Working
-    fkey_item_user = db.relationship('User', foreign_keys=['fkey_item_user_id'], backref="fkey_item_user_backref", cascade="all") # Tested and Working
+    fkey_item_user = db.relationship('User', foreign_keys=[fkey_item_user_id], backref="fkey_item_user_backref", cascade="all") # Tested and Working
 

@@ -14,7 +14,7 @@ class Order(db.Model):
     items_for_orders = db.relationship('Item', secondary=orders_items) # Tested and Working
     # One User to Many Order
     fkey_order_user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False) # Tested and Working
-    fkey_order_user = db.relationship('User', foreign_keys=['fkey_order_user_id'], backref="fkey_order_user_backref", cascade="all") # Tested and Working
+    fkey_order_user = db.relationship('User', foreign_keys=[fkey_order_user_id], backref="fkey_order_user_backref", cascade="all") # Tested and Working
     #One Address to Many Order
     fkey_order_address_id = db.Column(db.Integer, db.ForeignKey('addresses.id'), nullable=False) # Tested and Working
-    fkey_order_address = db.relationship('Address', foreign_keys=['fkey_order_address_id'], backref="fkey_order_address_backref", cascade="all") # Tested and Working
+    fkey_order_address = db.relationship('Address', foreign_keys=[fkey_order_address_id], backref="fkey_order_address_backref", cascade="all") # Tested and Working
