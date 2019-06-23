@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 py3SQLAlchemyEnv/
+migrationsTEMP/
 *.db
 *.bak
 helper.txt
