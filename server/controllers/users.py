@@ -176,3 +176,99 @@ def logout():
     #alerts = flash('Thanks for using our site!')
     return redirect('login')
 
+def user_list():
+    if 'user_id' not in session:
+        return render_template('page_not_found.html')
+    logged_in_user = User.query.get(session['user_id'])
+    user_list = User.query.all()
+    if logged_in_user.approval_id == 9:
+        return render_template('users_list.html', logged_in_user=logged_in_user, user_list=user_list)
+    else:
+        return render_template('page_not_found.html', logged_in_user=logged_in_user, user_list=user_list)
+
+def admin_update(id):
+    alerts = []
+    user_to_update = User.query.get(id)
+
+    # Check if email is different from database
+    if user_to_update.email == request.form['email']:
+        print('1user_to_update.email: ', user_to_update.email, '||', request.form['email'])
+        if len(request.form['fname']) < 1:
+            alerts.append('The first name field is required!')
+        elif request.form['fname'].isalpha() != True:
+            alerts.append('Only letters are allowed in the first name field!')
+
+        if len(request.form['lname']) < 1:
+            alerts.append('The last name field is required!')
+        elif request.form['lname'].isalpha() != True:
+            alerts.append('Only letters are allowed in the last name field!')
+
+        if len(alerts) > 0:
+            if len(alerts) == 5:
+                flash('All fields are required!')
+                # return redirect('/user/register')
+                return render_template('/partials/alerts.html'), 500   
+            else:
+                for alert in alerts:
+                    flash(alert)
+                #return redirect('/admin/users') 
+                return render_template('/partials/alerts.html'), 500
+        else:
+            print('2user_to_update.email: ', user_to_update.email, '||', request.form['email'])
+            user = User.query.get(id)
+            user.first_name = request.form['fname']
+            user.last_name = request.form['lname']
+            user.email = request.form['email']
+            db.session.commit()
+            # flash('Saving the user account!')
+            # for alert in alerts:
+            #     flash(alert)
+            # return redirect('/admin/users')
+            return render_template('/partials/alerts.html', alerts=alerts)
+
+
+
+    # else:
+    #     get_user_by_email = User.query.filter_by(email=request.form['email']).first()
+    #     if get_user_by_email != None:
+    #         alerts.append('The email address already exists!')
+    #     else:
+    #         if len(request.form['fname']) < 1:
+    #             alerts.append('The first name field is required!')
+    #         elif request.form['fname'].isalpha() != True:
+    #             alerts.append('Only letters are allowed in the first name field!')
+
+    #         if len(request.form['lname']) < 1:
+    #             alerts.append('The last name field is required!')
+    #         elif request.form['lname'].isalpha() != True:
+    #             alerts.append('Only letters are allowed in the last name field!')
+                
+    #         if len(request.form['email']) < 1:
+    #             alerts.append('The email address field is required!')
+    #         elif not EMAIL_REGEX.match(request.form['email']):
+    #             alerts.append('Invalid email address!')
+
+    # if len(alerts) > 0:
+    #     if len(alerts) == 5:
+    #         flash('All fields are required!')
+    #         # return redirect('/user/register')
+    #         return render_template('/partials/alerts.html'), 500   
+    #     else:
+    #         for alert in alerts:
+    #             flash(alert)
+    #         #return redirect('/admin/users') 
+    #         return render_template('/partials/alerts.html'), 500
+    # else:
+    #     alerts=[]
+    #     user = User.query.get(id)
+    #     user.first_name = request.form['fname']
+    #     user.last_name = request.form['lname']
+    #     user.email = request.form['email']
+    #     db.session.commit()
+    #     # alerts.append('The user account has been updated!')
+    #     # for alert in alerts:
+    #     #     flash(alert)
+    #     return render_template('/partials/alerts.html', alerts=alerts)
+    #     # return redirect('/admin/users')
+
+

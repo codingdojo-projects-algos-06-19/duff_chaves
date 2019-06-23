@@ -10,3 +10,5 @@ app.add_url_rule('/user/update/<id>', view_func=users.update, methods=['POST'], 
 app.add_url_rule('/user/process_login', view_func=users.process_login, methods=['POST'], endpoint='users:process_login')
 app.add_url_rule('/user/welcome', view_func=users.welcome, endpoint='users:welcome')
 app.add_url_rule('/user/logout', view_func=users.logout, endpoint='users:logout')
+app.add_url_rule('/admin/users', view_func=users.user_list, endpoint='users:user_list')
+app.add_url_rule('/admin/user/update/<id>', view_func=users.admin_update, methods=['POST'], endpoint='users:admin_update')

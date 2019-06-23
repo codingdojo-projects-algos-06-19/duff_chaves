@@ -42,29 +42,39 @@
                         <li class="nav-item">
                             <a class="nav-link waves-effect waves-light" href="/listen">Listen</a>
                         </li>
-                        {% if 'user_id' in session %}
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-light" href="/user/my_account">
-                            My Account
-                            </a>
+                {% if 'user_id' in session %}
+                    {% if logged_in_user.approval_id == 9 %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">Admin</a>
+                            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="/user/my_account">Profile</a>
+                                <a class="dropdown-item" href="/admin/users">Users List</a>
+                                <a class="dropdown-item" href="/admin/items">Items List</a>
+                                <a class="dropdown-item" href="/admin/tours">Tours List</a>
+                                <a class="dropdown-item" href="/admin/orders">Orders List</a>
+                                <a class="dropdown-item" href="/user/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-light" href="/user/logout">   
-                                Logout <i class="fas fa-sign-out-alt"></i>
-                            </a>
-                        </li>
-                        {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link waves-effect waves-light" href="/user/register">   
-                                Register
-                            </a>
-                        </li>
-                            <li class="nav-item">
-                            <a class="nav-link waves-effect waves-light" href="/user/login">   
-                                Login <i class="fas fa-sign-in-alt"></i>
-                            </a> 
+                    {% else %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">My Account</a>
+                            <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="/user/my_account">Profile</a>
+                                <a class="dropdown-item" href="/user/{{ logged_in_user.id }}/orders">My Orders</a>
+                                <a class="dropdown-item" href="/user/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
+                            </div>
                         </li>
                         {% endif %}
+                {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link waves-effect waves-light" href="/user/register">Register</a>
+                        </li>
+                            <li class="nav-item">
+                            <a class="nav-link waves-effect waves-light" href="/user/login">Login <i class="fas fa-sign-in-alt"></i></a> 
+                        </li>
+                {% endif %}
                     </ul>
                 </div>
             </div>

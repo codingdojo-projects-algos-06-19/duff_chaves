@@ -2,55 +2,48 @@
 {% block title %}Tour - CoolBand {% endblock %}
 {% block body %}
 <main>
-    <div class="container">
-        <div class="text-center py-5">
-            <h1 class="h1 pink-text"><i class="fas fa-music"></i> Tour</h1>
-        </div>
-        <div class="row">
-            <div class="table-responsive mb-5">
-                <table class="table">
-                    <tbody>
-                    <tr>
-                        <td>5/23</td>
-                        <td>7:30PM</td>
-                        <td>Seatle, WA</td>
-                        <td>The Crocodile Cafe</td>
-                    </tr>
-                    <tr>
-                        <td>5/24</td>
-                        <td>8:30PM</td>
-                        <td>Seatle, WA</td>
-                        <td>The Crocodile Cafe</td>
-                    </tr>
-                    <tr>
-                        <td>5/26</td>
-                        <td>9:00PM</td>
-                        <td>Santa Cruz, CA</td>
-                        <td>The Catalyst</td>
-                    </tr>
-                    <tr>
-                        <td>5/27</td>
-                        <td>3:00PM</td>
-                        <td>Las Vegas, NV</td>
-                        <td>Red Rock Ampitheatre</td>
-                    </tr>
-                    <tr>
-                        <td>5/28</td>
-                        <td>5:00PM</td>
-                        <td>Las Vegas, NV</td>
-                        <td>Red Rock Ampitheatre</td>
-                    </tr>
-                    <tr>
-                        <td>5/29</td>
-                        <td>3:00PM</td>
-                        <td>Las Vegas, NV</td>
-                        <td>Red Rock Ampitheatre</td>
-                    </tr>
-                    </tbody>
-                </table>
+        <div class="container">
+            <div class="text-center py-5">
+                <h1 class="h1 pink-text"><i class="fas fa-music"></i> Tours</h1>
             </div>
+            {% if tours %}
+            <div class="row">
+                <div class="table-responsive mb-5">
+                    <table class="table">
+                        <tbody>
+                            <thead>
+                                <th>Id</th>
+                                <th>Date</th>
+                                <th>Venue</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Country</th>
+                                <th>Phone</th>
+                                <th>Last Updated</th>
+                            </thead>
+                        {% for tour in tours %}
+                            <tr>
+                                <td><small>{{ tour.id }}</small></td>
+                                <td><small>{{ tour.event_date }}</small></td>
+                                <td><small>{{ tour.venue_name }}</small></td>
+                                <td><small>{{ tour.venue_address }}</small></td>
+                                <td><small>{{ tour.venue_city }}</small></td>
+                                <td><small>{{ tour.venue_country }}</small></td>
+                                <td><small>{{ tour.venue_phone }}</small></td>
+                                <td><small>{{ tour.last_updated }}</small></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                <div class="col-lg-12">
+                    <p>There are no tours available yet.</p>
+                </div>
+            </div>
+            {% endif %}
         </div>
-    </div>
-</main>
-    
+    </main>
 {% endblock %}

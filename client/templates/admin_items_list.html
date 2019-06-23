@@ -1,0 +1,45 @@
+{% extends './layout.html' %}
+{% block title %}Admin Items List - CoolBand {% endblock %}
+{% block body %}
+<main>
+    <div class="container">
+        <div class="text-center py-5">
+            <h1 class="h1 pink-text"><i class="far fa-list-alt"></i> Items List</h1>
+        </div>
+        {% if items %}
+        <div class="row">
+            <div class="table-responsive mb-5">
+                <table class="table">
+                    <tbody>
+                        <thead>
+                            <th>Id</th>
+                            <th>Create at</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Last Updated</th>
+                        </thead>
+                    {% for item in items %}
+                        <tr>
+                            <td><small>{{ item.id }}</small></td>
+                            <td><small>{{ item.created_at }}</small></td>
+                            <td><small>{{ item.name }}</small></td>
+                            <td><small>{{ item.description }}</small></td>
+                            <td><small>{{ item.price }}</small></td>
+                            <td><small>{{ item.updated_at }}</small></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <div class="col-lg-12">
+                <p>There are no items available.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends './layout.html' %}
+{% block title %}Admin Orders List - CoolBand {% endblock %}
+{% block body %}
+<main>
+    <div class="container">
+        <div class="text-center py-5">
+            <h1 class="h1 pink-text"><i class="fas fa-file-invoice-dollar"></i> Orders List</h1>
+        </div>
+        {% if orders %}
+        <div class="row">
+            <div class="table-responsive mb-5">
+                <table class="table">
+                    <tbody>
+                        <thead>
+                            <th>Order Id</th>
+                            <th>Date</th>
+                            <th>User</th>
+                            <th>Total</th>
+                            <th>Paid</th>
+                            <th>Balance</th>
+                        </thead>
+                    {% for order in orders %}
+                        <tr>
+                            <td><small>{{ order.id }}</small></td>
+                            <td><small>{{ order.created_at }}</small></td>
+                            <td><small>{{ order.first_name + ' ' + order.last_name }}</small></td>
+                            <td><small>{{ order.total }}</small></td>
+                            <td><small>{{ order.paid }}</small></td>
+                            <td><small>{{ order.balance }}</small></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <div class="col-lg-12">
+                <p>There are no orders available.</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}
