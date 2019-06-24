@@ -12,3 +12,4 @@ app.add_url_rule('/user/welcome', view_func=users.welcome, endpoint='users:welco
 app.add_url_rule('/user/logout', view_func=users.logout, endpoint='users:logout')
 app.add_url_rule('/admin/users', view_func=users.user_list, endpoint='users:user_list')
 app.add_url_rule('/admin/user/update/<id>', view_func=users.admin_update, methods=['POST'], endpoint='users:admin_update')
+app.add_url_rule('/admin/user/<id>/edit', view_func=users.admin_edit, endpoint='users:admin_edit')

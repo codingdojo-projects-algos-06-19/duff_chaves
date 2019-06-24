@@ -36,24 +36,24 @@ $(document).ready(function() {
     });
     $('.admin-user-update-form').submit(function(e) {
         var FORM_USER_ID = $('input[name="user-id"]').val();
-        //console.log('1FORM_USER_ID: ', FORM_USER_ID)
+        console.log('1FORM_USER_ID: ', FORM_USER_ID)
         e.preventDefault()
         $.ajax({
             url: '/admin/user/update/' + FORM_USER_ID,
             method: 'POST',
-            data: $('form').serialize(),
+            data: $('#admin-user-update-form-'+FORM_USER_ID+'').serialize(),
             success: function(alerts) {
                 //console.log('2FORM_USER_ID: ', FORM_USER_ID)
                 $('.btn-update').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Saving...').addClass('disabled');
                 console.log('SUCCESS')
-                $("#modal-alerts").html(alerts)
+                $("#alerts").html(alerts)
                 setTimeout("window.location.replace('/admin/users');",2000);
                 //window.location.replace('/admin/users')
             },
             error: function(data) {
                 console.log('ERROR')
                 //console.log('3FORM_USER_ID: ', FORM_USER_ID)
-                $("#modal-alerts").html(data.responseText)
+                $("#alerts").html(data.responseText)
             }
         })
     });

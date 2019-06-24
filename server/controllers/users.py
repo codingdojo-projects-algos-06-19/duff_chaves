@@ -1,5 +1,6 @@
 from flask import render_template, request, redirect, session, url_for, flash
 from server.models.users import User
+from server.models.addresses import Address
 from config import bcrypt, db
 import re
 
@@ -116,9 +117,12 @@ def update(id):
             return render_template('/partials/alerts.html'), 500
     else:
         user = User.query.get(id)
+        # user_address = Address.query.get(user.fkey_user_address_id)
+        # print('user_address: ', user_address)
         user.first_name = request.form['fname']
         user.last_name = request.form['lname']
         user.email = request.form['email']
+
         db.session.commit()
         alerts.append('Your account has been updated!')
         for alert in alerts:
@@ -186,9 +190,21 @@ def user_list():
     else:
         return render_template('page_not_found.html', logged_in_user=logged_in_user, user_list=user_list)
 
+def admin_edit(id):
+    if 'user_id' not in session:
+        return render_template('page_not_found.html')
+    logged_in_user = User.query.get(session['user_id'])
+    user_to_update = User.query.get(id)
+    if logged_in_user.approval_id == 9:
+        return render_template('admin_user_edit.html', logged_in_user=logged_in_user, user=user_to_update)
+    else:
+        return render_template('page_not_found.html', logged_in_user=logged_in_user, user_list=user_list)
+
 def admin_update(id):
     alerts = []
     user_to_update = User.query.get(id)
+    print('users_to_update: ', user_to_update )
+    # return ('/admin/users')
 
     # Check if email is different from database
     if user_to_update.email == request.form['email']:
@@ -226,49 +242,47 @@ def admin_update(id):
             # return redirect('/admin/users')
             return render_template('/partials/alerts.html', alerts=alerts)
 
+    else:
+        get_user_by_email = User.query.filter_by(email=request.form['email']).first()
+        if get_user_by_email != None:
+            alerts.append('The email address already exists!')
+        else:
+            if len(request.form['fname']) < 1:
+                alerts.append('The first name field is required!')
+            elif request.form['fname'].isalpha() != True:
+                alerts.append('Only letters are allowed in the first name field!')
 
-
-    # else:
-    #     get_user_by_email = User.query.filter_by(email=request.form['email']).first()
-    #     if get_user_by_email != None:
-    #         alerts.append('The email address already exists!')
-    #     else:
-    #         if len(request.form['fname']) < 1:
-    #             alerts.append('The first name field is required!')
-    #         elif request.form['fname'].isalpha() != True:
-    #             alerts.append('Only letters are allowed in the first name field!')
-
-    #         if len(request.form['lname']) < 1:
-    #             alerts.append('The last name field is required!')
-    #         elif request.form['lname'].isalpha() != True:
-    #             alerts.append('Only letters are allowed in the last name field!')
+            if len(request.form['lname']) < 1:
+                alerts.append('The last name field is required!')
+            elif request.form['lname'].isalpha() != True:
+                alerts.append('Only letters are allowed in the last name field!')
                 
-    #         if len(request.form['email']) < 1:
-    #             alerts.append('The email address field is required!')
-    #         elif not EMAIL_REGEX.match(request.form['email']):
-    #             alerts.append('Invalid email address!')
+            if len(request.form['email']) < 1:
+                alerts.append('The email address field is required!')
+            elif not EMAIL_REGEX.match(request.form['email']):
+                alerts.append('Invalid email address!')
 
-    # if len(alerts) > 0:
-    #     if len(alerts) == 5:
-    #         flash('All fields are required!')
-    #         # return redirect('/user/register')
-    #         return render_template('/partials/alerts.html'), 500   
-    #     else:
-    #         for alert in alerts:
-    #             flash(alert)
-    #         #return redirect('/admin/users') 
-    #         return render_template('/partials/alerts.html'), 500
-    # else:
-    #     alerts=[]
-    #     user = User.query.get(id)
-    #     user.first_name = request.form['fname']
-    #     user.last_name = request.form['lname']
-    #     user.email = request.form['email']
-    #     db.session.commit()
-    #     # alerts.append('The user account has been updated!')
-    #     # for alert in alerts:
-    #     #     flash(alert)
-    #     return render_template('/partials/alerts.html', alerts=alerts)
-    #     # return redirect('/admin/users')
+    if len(alerts) > 0:
+        if len(alerts) == 5:
+            flash('All fields are required!')
+            # return redirect('/user/register')
+            return render_template('/partials/alerts.html'), 500   
+        else:
+            for alert in alerts:
+                flash(alert)
+            #return redirect('/admin/users') 
+            return render_template('/partials/alerts.html'), 500
+    else:
+        alerts=[]
+        user = User.query.get(id)
+        user.first_name = request.form['fname']
+        user.last_name = request.form['lname']
+        user.email = request.form['email']
+        db.session.commit()
+        # alerts.append('The user account has been updated!')
+        # for alert in alerts:
+        #     flash(alert)
+        return render_template('/partials/alerts.html', alerts=alerts)
+        # return redirect('/admin/users')
 
 

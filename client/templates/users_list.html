@@ -39,7 +39,7 @@
                             <td><small>{{ user.created_at }}</small></td>
                             <td><small>{{ user.updated_at }}</small></td>
                             <td>
-                                <i id="modalActivate{{ user.id }}" type="button" class="fa fa-edit" data-toggle="modal" data-target="#user-edit-modal-{{ user.id }}"></i>
+                                <a href="/admin/user/{{ user.id }}/edit"><i type="button" class="fa fa-edit"></i></a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -49,40 +49,7 @@
         </div>
     </div>
     {% for user in user_list %}
-    <div class="modal fade right" id="user-edit-modal-{{ user.id }}" tabindex="-1" role="dialog" aria-labelledby="user-edit-modal-Label-{{ user.id }}" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <form class="admin-user-update-form text-center border border-light" action="/admin/user/update/{{ user.id }}" method="POST">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="user-edit-modal-Label-{{ user.id }}">Editing user <strong>{{ user.first_name + ' ' + user.last_name }}</strong></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="modal-alerts"></div>
-                        <div class="form-row mb-2 mt-2">
-                            <div class="col">
-                                <input id="user-id" type="hidden" name="user-id" value="{{ user.id }}" >
-                                <input type="text" class="form-control mb-4" name="fname" value="{{ user.first_name }}">
-                            </div>
-                            <div class="col">
-                                <input type="text" class="form-control mb-4" name="lname" value="{{ user.last_name }}">
-                            </div>
-                        </div>
-                        <div class="form-row mb-2">
-                            <input type="email" class="form-control mb-4" name="email" value="{{ user.email }}">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                       
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button id="" type="submit" class="btn-update btn btn-success">Update</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+
     {% endfor %}
 </main>
 {% endblock %}
