@@ -1,6 +1,5 @@
 from flask import render_template, request, redirect, session, url_for, flash
 from server.models.users import User
-from server.models.addresses import Address
 from config import bcrypt, db
 import re
 
@@ -16,7 +15,8 @@ def create():
     # @A1aaaaa
     alerts = User.validate(request.form)
     if len(alerts) > 0:
-        if len(alerts) == 5:
+        print(alerts)
+        if len(alerts) == 10:
             flash('All fields are required!')
             # return redirect('/user/register')
             return render_template('/partials/alerts.html'), 500   
@@ -117,11 +117,15 @@ def update(id):
             return render_template('/partials/alerts.html'), 500
     else:
         user = User.query.get(id)
-        # user_address = Address.query.get(user.fkey_user_address_id)
-        # print('user_address: ', user_address)
         user.first_name = request.form['fname']
         user.last_name = request.form['lname']
         user.email = request.form['email']
+        user.address1 = request.form['address1']
+        user.address2 = request.form['address2']
+        user.city = request.form['city']
+        user.state = request.form['state']
+        user.country = request.form['country']
+        user.postal_code = request.form['postal_code']
 
         db.session.commit()
         alerts.append('Your account has been updated!')
@@ -129,7 +133,7 @@ def update(id):
             flash(alert)
             print('ALERTS: ', alert)
         # return redirect('/user/my_account')
-        return render_template('/partials/alerts.html', alerts=alerts)
+        return render_template('/partials/alerts-info.html', alerts=alerts)
 
 
 def process_login():
@@ -235,17 +239,19 @@ def admin_update(id):
             user.first_name = request.form['fname']
             user.last_name = request.form['lname']
             user.email = request.form['email']
+            user.address1 = request.form['address1']
+            user.address2 = request.form['address2']
+            user.city = request.form['city']
+            user.state = request.form['state']
+            user.country = request.form['country']
+            user.postal_code = request.form['postal_code']            
             db.session.commit()
-            # flash('Saving the user account!')
-            # for alert in alerts:
-            #     flash(alert)
-            # return redirect('/admin/users')
             return render_template('/partials/alerts.html', alerts=alerts)
 
     else:
         get_user_by_email = User.query.filter_by(email=request.form['email']).first()
         if get_user_by_email != None:
-            alerts.append('The email address already exists!')
+            alerts.append('The email address already exists! Please choose a different one.')
         else:
             if len(request.form['fname']) < 1:
                 alerts.append('The first name field is required!')
@@ -282,7 +288,7 @@ def admin_update(id):
         # alerts.append('The user account has been updated!')
         # for alert in alerts:
         #     flash(alert)
-        return render_template('/partials/alerts.html', alerts=alerts)
+        return render_template('/partials/alerts-info.html', alerts=alerts)
         # return redirect('/admin/users')
 
 

@@ -2,7 +2,6 @@ from flask import session
 from config import db, bcrypt
 from sqlalchemy.sql import func
 import re
-from server.models.addresses import Address
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
@@ -14,18 +13,17 @@ class User(db.Model):
     email = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(255), nullable=False)
     approval_id = db.Column(db.Integer, server_default='1')
+    address1 = db.Column(db.String(255))
+    address2 = db.Column(db.String(255))
+    city = db.Column(db.String(100))
+    state = db.Column(db.String(100))
+    country = db.Column(db.String(100))
+    postal_code = db.Column(db.String(25))
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
-    # Relationships Below
-    # One Address to Many User
-    fkey_user_address_id = db.Column(db.Integer, db.ForeignKey(Address.id)) # Tested and Working
-    fkey_user_address = db.relationship('Address', foreign_keys=[fkey_user_address_id], backref=db.backref("fkey_user_address_backref", cascade="all")) # Tested and Working
-    # user              = db.relationship('User',  foreign_keys=[user_id],              backref=db.backref("tweets", cascade="all, delete-orphan"))
-
 
     @classmethod
     def validate(cls, form):
-        print(form)
         alerts = []
         get_user_by_email = User.query.filter_by(email=form['email']).first()
         if get_user_by_email != None:
@@ -46,6 +44,21 @@ class User(db.Model):
         elif not EMAIL_REGEX.match(form['email']):
             alerts.append('Invalid email address!')
 
+        if len(form['address1']) < 1:
+            alerts.append('The address one field is required!')
+
+        if len(form['city']) < 1:
+            alerts.append('The city field is required!')
+
+        if len(form['state']) < 1:
+            alerts.append('The state field is required!')
+
+        if len(form['country']) < 1:
+            alerts.append('The country field is required!')
+
+        if len(form['postal_code']) < 1:
+            alerts.append('The postal code field is required!')
+
         if len(form['password']) < 1:
             alerts.append('The password cannot be blank!')
         elif len(form['password']) < 8:
@@ -62,12 +75,19 @@ class User(db.Model):
 
     @classmethod
     def create(cls, form):
+        print(form)
         #@A1aaaaa
         pw_hash = bcrypt.generate_password_hash(form['password']) 
         new_user = cls(
             first_name = form['fname'],
             last_name = form['lname'],
             email = form['email'],
+            address1 = form['address1'],
+            address2 = form['address2'],
+            city = form['city'],
+            state = form['state'],
+            country = form['country'],
+            postal_code = form['postal_code'],
             password = pw_hash
         )
         db.session.add(new_user)

@@ -26,7 +26,8 @@ $(document).ready(function() {
             data: $('#user-update-form').serialize(),
             success: function(alerts) {
                 console.log('SUCCESS')
-                $("#alerts").html(alerts)
+                // $('.btn-profile-update').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Saving...').addClass('disabled');
+                $("#alerts-info").html(alerts)
             },
             error: function(data) {
                 console.log('ERROR')
@@ -46,7 +47,7 @@ $(document).ready(function() {
                 //console.log('2FORM_USER_ID: ', FORM_USER_ID)
                 $('.btn-update').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Saving...').addClass('disabled');
                 console.log('SUCCESS')
-                $("#alerts").html(alerts)
+                $("#alerts-info").html(alerts)
                 setTimeout("window.location.replace('/admin/users');",2000);
                 //window.location.replace('/admin/users')
             },
