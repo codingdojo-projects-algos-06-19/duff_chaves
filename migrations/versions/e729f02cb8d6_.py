@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 5fe4a83a91f3
+Revision ID: e729f02cb8d6
 Revises: 
-Create Date: 2019-06-24 20:00:41.724277
+Create Date: 2019-06-27 00:17:56.486598
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '5fe4a83a91f3'
+revision = 'e729f02cb8d6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,9 +23,11 @@ def upgrade():
     sa.Column('venue_name', sa.String(length=45), nullable=True),
     sa.Column('venue_address', sa.String(length=45), nullable=True),
     sa.Column('venue_city', sa.String(length=45), nullable=True),
+    sa.Column('venue_state', sa.String(length=45), nullable=True),
     sa.Column('venue_country', sa.String(length=45), nullable=True),
     sa.Column('venue_phone', sa.String(length=45), nullable=True),
     sa.Column('event_date', sa.DateTime(), nullable=True),
+    sa.Column('event_img', sa.String(length=255), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=True),
     sa.PrimaryKeyConstraint('id')
@@ -53,9 +55,10 @@ def upgrade():
     sa.Column('name', sa.String(length=45), nullable=False),
     sa.Column('description', sa.String(length=255), nullable=False),
     sa.Column('price', sa.Integer(), nullable=False),
+    sa.Column('img_url', sa.String(length=255), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), server_default=sa.text('CURRENT_TIMESTAMP'), nullable=True),
-    sa.Column('fkey_item_user_id', sa.Integer(), nullable=False),
+    sa.Column('fkey_item_user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['fkey_item_user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )

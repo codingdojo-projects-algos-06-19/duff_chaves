@@ -1,0 +1,58 @@
+{% extends './layout.html' %}
+{% block title %}Admin Add Items - CoolBand {% endblock %}
+{% block body %}
+<main>
+    <div class="container">
+        <div class="text-center py-5">
+            <h1 class="h1 pink-text"><i class="far fa-list-alt"></i> Add Items</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 flex-center">
+                <div class="form-row mb-4">
+                    <form id="item-create-form" class="needs-validation text-center border border-light p-5" action="/admin/item/create" method="POST" novalidate>
+                        <div class="form-row mb-4 mt-4">
+                            <div class="col text-left">
+                                <span><small>Name</small></span>
+                                <input type="text" class="form-control" name="name" placeholder="" required>
+                            </div>
+                            <div class="col text-left">
+                                <span><small>Category</small></span>
+                                <select class="browser-default custom-select" name="category" required>
+                                    <option value=""> Choose</option>
+                                    <option value="Apparel">Apparel</option>
+                                    <option value="Mugs">Mugs</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="CollBand Collection">CollBand Collection</option>
+                                </select>
+                            </div>
+                            <div class="col text-left">
+                                <span><small>Price</small></span>
+                                <input type="text" class="form-control" name="price" required>
+                            </div>
+                        </div>
+                        <div class="form-row mb-4">
+                            <div class="col text-left">
+                                <span><small>Img URL</small></span>
+                                <input type="text" class="form-control" name="img_url" required>
+                            </div>
+                        </div>
+                        <div class="form-row mb-4">
+                            <div class="col text-left">
+                                <span><small>Description</small></span>
+                                <textarea class="form-control" name="description" id="" cols="30" rows="5" required></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" class="form-control" name="admin_user_id" value="{{ session['user_id'] }}">
+                        <div id="alerts"></div>
+                        <div id="alerts-info"></div>
+                        <button class="btn btn-pink btn-rounded btn-lg btn-add-item" type="submit">ADD</button>                            
+                        <hr style="border-color: #ffffff">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

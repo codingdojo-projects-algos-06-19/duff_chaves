@@ -56,3 +56,7 @@
 audio {
   background: transparent !important;
 }
+#img-item-list {
+  width: 200px;
+  height: 200px;
+}

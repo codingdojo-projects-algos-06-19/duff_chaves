@@ -38,8 +38,8 @@
                             <td><small>{{ user.state }}</small></td>
                             <td><small>{{ user.country }}</small></td>
                             <td><small>{{ user.postal_code }}</small></td>
-                            <td><small>{{ user.created_at }}</small></td>
-                            <td><small>{{ user.updated_at }}</small></td>
+                            <td><small>{{ user.created_at.strftime('%Y-%m-%d') }}</small></td>
+                            <td><small>{{ user.updated_at.strftime('%Y-%m-%d') }}</small></td>
                             <td>
                                 <a href="/admin/user/{{ user.id }}/edit"><i type="button" class="fa fa-edit"></i></a>
                             </td>

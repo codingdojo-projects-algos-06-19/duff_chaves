@@ -1,5 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import desc
+from sqlalchemy.exc import IntegrityError, SQLAlchemyError
 from sqlalchemy.sql import func
 from sqlalchemy import inspect
 from flask_migrate import Migrate

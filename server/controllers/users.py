@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, session, url_for, flash
 from server.models.users import User
-from config import bcrypt, db
+from config import bcrypt, db, IntegrityError, desc
 import re
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
@@ -105,6 +105,21 @@ def update(id):
             elif not EMAIL_REGEX.match(request.form['email']):
                 alerts.append('Invalid email address!')
 
+            if len(request.form['address1']) < 1:
+                alerts.append('The address one field is required!')
+
+            if len(request.form['city']) < 1:
+                alerts.append('The city field is required!')
+
+            if len(request.form['state']) < 1:
+                alerts.append('The state field is required!')
+
+            if len(request.form['country']) < 1:
+                alerts.append('The country field is required!')
+
+            if len(request.form['postal_code']) < 1:
+                alerts.append('The postal code field is required!')
+
     if len(alerts) > 0:
         if len(alerts) == 5:
             flash('All fields are required!')
@@ -161,6 +176,11 @@ def process_login():
             session['user_id'] = user.id
             session['user_full_name'] = user.first_name + ' ' + user.last_name
             logged_in_user = User.query.get(session['user_id'])
+            # Update admin user's approval level
+            print('logged_in_user_email:', logged_in_user.email)
+            if logged_in_user.email == 'admin@collband.com' and logged_in_user.approval_id != 9:
+                logged_in_user.approval_id = 9
+                db.session.commit()
             return redirect('/user/welcome')
             # return render_template('welcome.html', 
             #         user_list=User.query.all(), 
@@ -188,7 +208,7 @@ def user_list():
     if 'user_id' not in session:
         return render_template('page_not_found.html')
     logged_in_user = User.query.get(session['user_id'])
-    user_list = User.query.all()
+    user_list = User.query.order_by(desc(User.id))
     if logged_in_user.approval_id == 9:
         return render_template('users_list.html', logged_in_user=logged_in_user, user_list=user_list)
     else:
@@ -222,6 +242,21 @@ def admin_update(id):
             alerts.append('The last name field is required!')
         elif request.form['lname'].isalpha() != True:
             alerts.append('Only letters are allowed in the last name field!')
+
+        if len(request.form['address1']) < 1:
+            alerts.append('The address one field is required!')
+
+        if len(request.form['city']) < 1:
+            alerts.append('The city field is required!')
+
+        if len(request.form['state']) < 1:
+            alerts.append('The state field is required!')
+
+        if len(request.form['country']) < 1:
+            alerts.append('The country field is required!')
+
+        if len(request.form['postal_code']) < 1:
+            alerts.append('The postal code field is required!')
 
         if len(alerts) > 0:
             if len(alerts) == 5:

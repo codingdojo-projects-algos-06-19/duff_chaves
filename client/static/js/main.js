@@ -1,4 +1,14 @@
 $(document).ready(function() {
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    });
+    // popovers initialization - on click
+    $('[data-toggle="popover-click"]').popover({
+        html: true,
+        trigger: 'click',
+        placement: 'right',
+        content: function () { return '<img id="img-item-list" src="' + $(this).data('img') + '" />'; }
+    });
     $('#user-create-form').submit(function(e) {
         e.preventDefault()
         console.log('HERE')
@@ -93,6 +103,104 @@ $(document).ready(function() {
             }
         })
     })
+    $('#item-create-form').submit(function(e) {
+        e.preventDefault()
+        console.log('HERE')
+        $.ajax({
+            url: '/admin/item/create',
+            method: 'POST',
+            data: $('#item-create-form').serialize(),
+            success: function() {
+                console.log('SUCCESS')
+                $('.btn-add-item').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Saving').addClass('disabled');
+                setTimeout("window.location.replace('/admin/items');",2000);
+                //$('#user-create-form input').val("")
+            },
+            error: function(data) {
+                console.log('ERROR')
+                $("#alerts").html(data.responseText)
+            }
+        })
+    });
+    $('#admin-item-update-form').submit(function(e) {
+        var FORM_ITEM_ID = $('input[name="item-id"]').val();
+        console.log('FORM_ITEM_ID: ', FORM_ITEM_ID)
+        e.preventDefault()
+        $.ajax({
+            url: '/admin/item/update/' + FORM_ITEM_ID,
+            method: 'POST',
+            data: $('#admin-item-update-form').serialize(),
+            success: function(alerts) {
+                $('.btn-item-update').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Saving...').addClass('disabled');
+                console.log('SUCCESS')
+                $("#alerts-info").html(alerts)
+                setTimeout("window.location.replace('/admin/items');",2000);
+            },
+            error: function(data) {
+                console.log('ERROR')
+                $("#alerts").html(data.responseText)
+            }
+        })
+    });
+    $('#admin-tour-create-form').submit(function(e) {
+        e.preventDefault()
+        console.log('HERE')
+        $.ajax({
+            url: '/admin/tour/create',
+            method: 'POST',
+            data: $('#admin-tour-create-form').serialize(),
+            success: function() {
+                console.log('SUCCESS')
+                $('.btn-add-tour').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Saving').addClass('disabled');
+                setTimeout("window.location.replace('/admin/tours');",2000);
+                //$('#user-create-form input').val("")
+            },
+            error: function(data) {
+                console.log('ERROR')
+                $("#alerts").html(data.responseText)
+            }
+        })
+    });
+    $('#admin-tour-update-form').submit(function(e) {
+        var FORM_TOUR_ID = $('input[name="tour-id"]').val();
+        console.log('FORM_TOUR_ID: ', FORM_TOUR_ID)
+        e.preventDefault()
+        $.ajax({
+            url: '/admin/tour/' + FORM_TOUR_ID + '/update',
+            method: 'POST',
+            data: $('#admin-tour-update-form').serialize(),
+            success: function(alerts) {
+                $('.btn-tour-update').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Saving...').addClass('disabled');
+                console.log('SUCCESS')
+                $("#alerts-info").html(alerts)
+                setTimeout("window.location.replace('/admin/tours');",2000);
+            },
+            error: function(data) {
+                console.log('ERROR')
+                $("#alerts").html(data.responseText)
+            }
+        })
+    });
+    $('#admin-tour-delete-form').submit(function(e) {
+        var FORM_TOUR_ID = $('input[name="tour-id"]').val();
+        console.log('FORM_TOUR_ID: ', FORM_TOUR_ID)
+        e.preventDefault()
+        $.ajax({
+            url: '/admin/tour/' + FORM_TOUR_ID + '/delete',
+            method: 'POST',
+            data: $('#admin-tour-delete-form').serialize(),
+            success: function(alerts) {
+                $('#btn-tour-delete').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Deleting...').addClass('disabled');
+                console.log('SUCCESS')
+                $("#alerts-info").html(alerts)
+                setTimeout("window.location.replace('/admin/tours');",2000);
+            },
+            error: function(data) {
+                console.log('ERROR')
+                $("#alerts").html(data.responseText)
+            }
+        })
+    });   
     $.get('/player', function(player_html){
         console.log('PLAYER: ', player_html)
         $('#player').html('<audio controls src="' + player_html + '"></audio>');

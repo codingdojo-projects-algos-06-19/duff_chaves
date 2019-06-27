@@ -12,6 +12,7 @@
                 <table class="table">
                     <tbody>
                         <thead>
+                            <th>Img</th>
                             <th>Id</th>
                             <th>Date</th>
                             <th>Venue</th>
@@ -20,17 +21,23 @@
                             <th>Country</th>
                             <th>Phone</th>
                             <th>Last Updated</th>
+                            <th><a href="/admin/add/tours" class="btn btn-pink btn-rounded btn-lg">ADD</a></th>
                         </thead>
                     {% for tour in tours %}
                         <tr>
+                            <td><small><a data-img="{{ tour.event_img }}" data-toggle="popover-click"><i class="far fa-image fa-lg"></i></a></small></td>
                             <td><small>{{ tour.id }}</small></td>
-                            <td><small>{{ tour.event_date }}</small></td>
+                            <td><small>{{ tour.event_date.strftime('%Y-%m-%d') }}</small></td>
                             <td><small>{{ tour.venue_name }}</small></td>
                             <td><small>{{ tour.venue_address }}</small></td>
                             <td><small>{{ tour.venue_city }}</small></td>
                             <td><small>{{ tour.venue_country }}</small></td>
                             <td><small>{{ tour.venue_phone }}</small></td>
-                            <td><small>{{ tour.last_updated }}</small></td>
+                            <td><small>{{ tour.updated_at }}</small></td>
+                            <td>
+                                <span class="mr-2"><a href="/admin/tour/{{ tour.id }}/edit"><i class="fa fa-edit fa-lg"></i></a></span>
+                                <span><a id="modalActivate2{{ tour.id }}" data-toggle="modal" data-target="#tour-delete-modal-{{ tour.id }}"><i class="text-danger fa fa-trash fa-lg"></i></a></span>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -45,5 +52,29 @@
         </div>
         {% endif %}
     </div>
+    {% for tour in tours %}
+    <div class="modal fade right" id="tour-delete-modal-{{ tour.id }}" tabindex="-1" role="dialog" aria-labelledby="tour-delete-modal-Label-{{ tour.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="tour-delete-modal-Label-{{ tour.id }}">Deleting tour <strong>{{ tour.name }}</strong>...</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to the delete this event?
+                    </div>
+                    <div class="modal-footer">
+                        <form id="admin-tour-delete-form" action="/admin/tour/{{ tour.id }}/delete" method="POST">
+                            <input type="hidden" name="tour-id" value="{{ tour.id }}">
+                            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button id="btn-tour-delete" type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 </main>
 {% endblock %}

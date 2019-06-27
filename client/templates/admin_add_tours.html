@@ -1,43 +1,47 @@
 {% extends './layout.html' %}
-{% block title %}Register - Demo App{% endblock %}
+{% block title %}Admin Add Tours - CoolBand {% endblock %}
 {% block body %}
+<main>
     <div class="container">
-        <div class="row pt-5">
+        <div class="text-center py-5">
+            <h1 class="h1 pink-text"><i class="far fa-list-alt"></i> Add Tours</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
             <div class="col-lg-12 flex-center">
                 <div class="form-row mb-4">
-                    <form id="user-create-form" class="needs-validation text-center border border-light p-5" action="/user/create" method="POST" novalidate>
-                        <div class="form-row mb-2">
-                            <div class="col-sm-12">
-                                <h2 class="mb-5">Register</h2>
+                    <form id="admin-tour-create-form" class="needs-validation text-center border border-light p-5" action="/admin/tour/create" method="POST" novalidate>
+                        <div class="form-row mb-4 mt-4">
+                            <div class="col text-left">
+                                <span><small>Venue Name</small></span>
+                                <input type="text" class="form-control" name="venue_name" placeholder="" required>
                             </div>
                             <div class="col text-left">
-                                <span><small>First Name</small></span>
-                                <input type="text" class="form-control" name="fname" placeholder="" required>
-                            </div>
-                            <div class="col text-left">
-                                <span><small>Last Name</small></span>
-                                <input type="text" class="form-control" name="lname" placeholder="" required>
+                                <span><small>Date</small></span>
+                                <input type="date" class="form-control" name="event_date" placeholder="" required>
                             </div>
                         </div>
                         <div class="form-row mb-4">
                             <div class="col text-left">
-                                <span><small>Address1</small></span>
-                                <input type="text" class="form-control" name="address1" required>
+                                <span><small>Venue Phone</small></span>
+                                <input type="text" class="form-control" name="venue_phone" placeholder="" required>
                             </div>
                             <div class="col text-left">
-                                <span><small>Address2</small></span>
-                                <input type="text" class="form-control" name="address2">
+                                <span><small>Venue Address</small></span>
+                                <input type="text" class="form-control" name="venue_address" placeholder="" required>
                             </div>
                         </div>
                         <div class="form-row mb-4">
                             <div class="col text-left">
-                                <span><small>City</small></span>
-                                <input type="text" class="form-control" name="city" required>
+                                <span><small>Venue City</small></span>
+                                <input type="text" class="form-control" name="venue_city" placeholder="" required>
                             </div>
                             <div class="col text-left">
                                 <span><small>State</small></span>
-                                <select class="browser-default custom-select" name="state" required>
-                                    <option value=""> Choose</option>
+                                <select class="browser-default custom-select" name="venue_state" required>
+                                    <option value="">Choose</option>
+                                    <option value="NA">Not Applicable</option>
                                     <option value="AL">Alabama</option>
                                     <option value="AK">Alaska</option>
                                     <option value="AZ">Arizona</option>
@@ -89,20 +93,12 @@
                                     <option value="WV">West Virginia</option>
                                     <option value="WI">Wisconsin</option>
                                     <option value="WY">Wyoming</option>
-                                
-                                
                                 </select>
-                            </div>
-                        </div>
-                        <div class="form-row mb-4">
-                            <div class="col text-left">
-                                <span><small>Postal Code</small></span>
-                                <input type="text" class="form-control" name="postal_code" required>
                             </div>
                             <div class="col text-left">
                                 <span><small>Country</small></span>
-                                <select name="country" class="browser-default custom-select" required>
-                                    <option value="Choose">Choose</option>
+                                <select name="venue_country" class="browser-default custom-select" required>
+                                    <option value="">Choose</option>
                                     <option value="US">United States</option>
                                     <option value="UM">United States Minor Outlying Islands</option>
                                     <option value="CA">Canada</option>
@@ -355,36 +351,20 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-row mb-2">
+                        <div class="form-row mb-4">
                             <div class="col text-left">
-                                <span><small>Email</small></span>
-                                <input type="email" class="form-control mb-4" name="email" placeholder="" required>
+                                <span><small>Event Image</small></span>
+                                <input type="text" class="form-control" name="event_img" placeholder="" required>
                             </div>
-                        </div>
-                        <div class="form-row mb-2">
-                            <div class="col text-left">
-                                <span><small>Password</small></span>
-                                <input type="password" class="form-control mb-4" name="password" placeholder="" required>
-                            </div>
-                            <div class="col text-left">
-                                <span><small>Confirm Password</small></span>
-                                <input type="password" class="form-control" name="password2" placeholder="" required>
-                            </div>
-                        </div>
-                        <div class="form-row mb-2">
                         </div>
                         <div id="alerts"></div>
                         <div id="alerts-info"></div>
-                        <small class="form-text text-muted light-gray-text mb-4">
-                            Password should be at least 8 characters and must contain a number, <br />a special character, upper and lowercase.
-                        </small>
-                        <button class="btn btn-pink btn-rounded btn-lg btn-register" type="submit">Register</button>                            
+                        <button class="btn btn-pink btn-rounded btn-lg btn-add-tour" type="submit">ADD</button>                            
                         <hr style="border-color: #ffffff">
-                        <small><p> By clicking <em>Register</em> you agree to our <a style="text-decoration: underline;" data-toggle="modal" data-target="#terms-modal">terms of service</a></p></small>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    {% include 'terms.html' %}
+</main>
 {% endblock %}

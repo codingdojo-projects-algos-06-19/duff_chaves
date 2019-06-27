@@ -1,0 +1,58 @@
+{% extends './layout.html' %}
+{% block title %}Admin Edit Item - CoolBand {% endblock %}
+{% block body %}
+<main>
+    <div class="container">
+        <div class="text-center py-5">
+            <h1 class="h1 pink-text"><i class="far fa-list-alt"></i> Edit Item</h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 flex-center">
+                <div class="form-row mb-4">
+                    <form id="admin-item-update-form" class="needs-validation text-center border border-light p-5" action="/admin/item/update/{{ item.id }}" method="POST" novalidate>
+                        <div class="form-row mb-4 mt-4">
+                            <div class="col text-left">
+                                <span><small>Name</small></span>
+                                <input type="text" class="form-control" name="name" value="{{ item.name }}" required>
+                            </div>
+                            <div class="col text-left">
+                                <span><small>Category</small></span>
+                                <select class="browser-default custom-select" name="category" value="{{ item.category }}" required>
+                                    <option value="{{ item.category }}">{{ item.category }}</option>
+                                    <option value="Apparel">Apparel</option>
+                                    <option value="Mugs">Mugs</option>
+                                    <option value="Accessories">Accessories</option>
+                                    <option value="CollBand Collection">CollBand Collection</option>
+                                </select>
+                            </div>
+                            <div class="col text-left">
+                                <span><small>Price</small></span>
+                                <input type="number" min="0.00" max="10000.00" step="0.01" class="form-control" name="price" value="{{ item.price }}" required>
+                            </div>
+                        </div>
+                        <div class="form-row mb-4">
+                            <div class="col text-left">
+                                <span><small>Image URL</small></span>
+                                <input type="text" class="form-control" name="img_url" value="{{ item.img_url }}" required>
+                            </div>
+                        </div>
+                        <div class="form-row mb-4">
+                            <div class="col text-left">
+                                <span><small>Description</small></span>
+                                <textarea class="form-control" name="description" id="" cols="30" rows="5" required>{{ item.description }}</textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" class="form-control" name="item-id" value="{{ item.id }}">
+                        <div id="alerts"></div>
+                        <div id="alerts-info"></div>
+                        <button class="btn btn-pink btn-rounded btn-lg btn-item-update" type="submit">UPDATE</button>                            
+                        <hr style="border-color: #ffffff">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

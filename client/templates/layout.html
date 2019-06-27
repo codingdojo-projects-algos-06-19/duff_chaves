@@ -44,14 +44,16 @@
                         </li>
                 {% if 'user_id' in session %}
                     {% if logged_in_user.approval_id == 9 %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                        <li class="nav-item dropdown multi-level-dropdown">
+                            <a class="btn btn-pink btn-sm dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">Admin</a>
                             <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                                <a class="dropdown-item" href="/user/my_account">Profile</a>
+                                <a class="dropdown-item" href="/user/my_account">My Profile</a>
                                 <a class="dropdown-item" href="/admin/users">Users List</a>
                                 <a class="dropdown-item" href="/admin/items">Items List</a>
+                                <a class="dropdown-item" href="/admin/add/items">Add Items</a>
                                 <a class="dropdown-item" href="/admin/tours">Tours List</a>
+                                <a class="dropdown-item" href="/admin/add/tours">Add Tours</a>
                                 <a class="dropdown-item" href="/admin/orders">Orders List</a>
                                 <a class="dropdown-item" href="/user/logout">Logout <i class="fas fa-sign-out-alt"></i></a>
                             </div>

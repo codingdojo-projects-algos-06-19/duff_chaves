@@ -12,21 +12,31 @@
                 <table class="table">
                     <tbody>
                         <thead>
+                            <th>Img</th>
                             <th>Id</th>
-                            <th>Create at</th>
                             <th>Name</th>
                             <th>Description</th>
                             <th>Price</th>
+                            <th>Created by</th>
+                            <th>Created at</th>
                             <th>Last Updated</th>
+                            <th><a href="/admin/add/items" class="btn btn-pink btn-rounded btn-lg">ADD</a></th>
                         </thead>
                     {% for item in items %}
                         <tr>
+                            <!--Images from https://picsum.photos/-->
+                            <td><small><a data-img="{{ item.img_url }}" data-toggle="popover-click"><i class="far fa-image fa-lg"></i></a></small></td>
                             <td><small>{{ item.id }}</small></td>
-                            <td><small>{{ item.created_at }}</small></td>
                             <td><small>{{ item.name }}</small></td>
                             <td><small>{{ item.description }}</small></td>
-                            <td><small>{{ item.price }}</small></td>
+                            <td><small>{{ "$%.2f"|format(item.price) }} </small></td>
+                            <td><small>{{ item.first_name + ' ' + item.last_name}}</small></td>
+                            <td><small>{{ item.created_at }}</small></td>
                             <td><small>{{ item.updated_at }}</small></td>
+                            <td>                                
+                                <span class="mr-2"><a href="/admin/item/{{ item.id }}/edit"><i class="fa fa-edit fa-lg"></i></a></span>
+                                <span><a id="modalActivate2{{ item.id }}" data-toggle="modal" data-target="#item-delete-modal-{{ item.id }}"><i class="text-danger fa fa-trash fa-lg"></i></a></span>
+                            </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -41,5 +51,29 @@
         </div>
         {% endif %}
     </div>
+    {% for item in items %}
+    <div class="modal fade right" id="item-delete-modal-{{ item.id }}" tabindex="-1" role="dialog" aria-labelledby="item-delete-modal-Label-{{ item.id }}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="item-delete-modal-Label-{{ item.id }}">Deleting item <strong>{{ item.name }}</strong>...</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to the delete this item?
+                    </div>
+                    <div class="modal-footer">
+                        <form id="admin-item-delete-form" action="/admin/item/{{ item.id }}/delete" method="POST">
+                            <input type="hidden" name="item-id" value="{{ item.id }}">
+                            <button type="submit" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button id="btn-item-delete" type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 </main>
 {% endblock %}

@@ -9,7 +9,7 @@
         <div class="col-lg-12 flex-center">
             <div class="form-row mb-4">
                 <form id="user-update-form" class="needs-validation text-center border border-light p-5" action="/user/update/{{ logged_in_user.id }}" method="POST" novalidate>
-                    <div class="form-row mb-4">
+                    <div class="form-row mb-2">
                         <div class="col-sm-12">
                             <h2 class="mb-5">Account Update</h2>
                         </div>
@@ -22,7 +22,7 @@
                             <input type="text" class="form-control" name="lname" value="{{ logged_in_user.last_name }}" required>
                         </div>
                     </div>
-                    <div class="form-row mb-4">
+                    <div class="form-row mb-2">
                         <div class="col text-left">
                             <span><small>Email</small></span>
                             <input type="email" class="form-control mb-4" name="email" value="{{ logged_in_user.email }}" required>
@@ -50,20 +50,20 @@
                             </small>
                         </div>
                     </div>
-                    <div class="form-row mb-4">
+                    <div class="form-row mb-2">
                             <div class="col text-left">
                                 <span><small>Address1</small></span>
-                                <input type="text" class="form-control mb-4" name="address1" value="{{ logged_in_user.address1 }}">
+                                <input type="text" class="form-control mb-2" name="address1" value="{{ logged_in_user.address1 }}">
                             </div>
                             <div class="col text-left">
                                 <span><small>Address2</small></span>
-                                <input type="text" class="form-control mb-4" name="address2" value="{{ logged_in_user.address2 }}">
+                                <input type="text" class="form-control mb-2" name="address2" value="{{ logged_in_user.address2 }}">
                             </div>
                     </div>
-                    <div class="form-row mb-4">
+                    <div class="form-row mb-2">
                         <div class="col text-left">
                             <span><small>City</small></span>
-                            <input type="text" class="form-control mb-4" name="city" value="{{ logged_in_user.city }}">
+                            <input type="text" class="form-control mb-2" name="city" value="{{ logged_in_user.city }}">
                         </div>
                         <div class="col text-left">
                             <span><small>State</small></span>
@@ -123,10 +123,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-row mb-4">
+                    <div class="form-row mb-2">
                         <div class="col text-left">
                             <span><small>Postal Code</small></span>
-                            <input type="text" class="form-control mb-4" name="postal_code" value="{{ logged_in_user.postal_code }}">
+                            <input type="text" class="form-control mb-2" name="postal_code" value="{{ logged_in_user.postal_code }}">
                         </div>
                         <div class="col text-left">
                             <span><small>Country</small></span>
