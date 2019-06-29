@@ -72,8 +72,14 @@ body {
   width: 100%; 
   display: none;
 }	
-/* @media (max-width: 767px) {
-  #footer {
-    position: relative; 
-	}
-} */
+body {
+  margin:0;
+  padding:0;  
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  min-height:100vh;
+}
+main {
+  flex:1 0 auto;
+}
