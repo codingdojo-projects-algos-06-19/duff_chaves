@@ -72,7 +72,7 @@ body {
   width: 100%; 
   display: none;
 }	
-body {
+/* body {
   margin:0;
   padding:0;  
   display:flex;
@@ -82,4 +82,4 @@ body {
 }
 main {
   flex:1 0 auto;
-}
+} */
