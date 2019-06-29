@@ -5,3 +5,4 @@ migrationsTEMP/
 *.db
 *.bak
 helper.txt
+stripe-sku.html

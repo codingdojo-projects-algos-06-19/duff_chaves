@@ -60,3 +60,20 @@ audio {
   width: 200px;
   height: 200px;
 }
+.hidden {
+  display: none;
+}
+body {
+  margin-bottom: 0px;
+}
+#footer {
+  position: absolute; 
+  bottom: 0; 
+  width: 100%; 
+  display: none;
+}	
+/* @media (max-width: 767px) {
+  #footer {
+    position: relative; 
+	}
+} */

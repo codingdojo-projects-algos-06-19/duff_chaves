@@ -1,0 +1,53 @@
+{% extends './layout.html' %}
+{% block title %}{{ item.name }} - CoolBand {% endblock %}
+{% block body %}
+<script>
+    var HIDE_ADD_BUTTON = '{{ hide_add_button }}'
+    var HIDE_REMOVE_BUTTON = '{{ hide_remove_button }}'
+</script>
+    <div class="container">
+        <div class="text-center py-4">
+            <h1 class="h1 pink-text"><i class="fas fa-tag"></i> Item Description</h1>
+        </div>
+        <div class="row mt-5 mb-4 wow fadeIn">
+            <div class="col-md-6 mb-4">
+                <img src="{{ item.img_url }}" class="img-fluid z-depth-1-half" alt="">
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="mb-4">
+                    <a class="btn btn-sm btn-pink" href="{{ request.referrer }}">Back</a>
+                </div>
+                {% if logged_in_user.approval_id == 9 %}
+                <h3 class="h3 mb-3">{{ item.name }} <span class="mr-2"><a href="/admin/item/{{ item.id }}/edit"><i class="fa fa-edit fa-sm pink-text"></i></a></span></h3>
+                {% else %}
+                <h3 class="h3 mb-3">{{ item.name }} </h3>
+                {% endif %}
+                <h6 class="small mb-3">Sku #: {{ item.id }}</h6>
+                <h6 class="small mb-3">Date Added: {{ item.created_at.strftime('%Y-%m-%d') }}</h6>
+                <p>{{ item.description }}</p>
+                <h6 class="mb-3">{{ "$%.2f"|format(item.price) }}</h6>
+                <hr>
+                <div class="btn-group" role="group" aria-label="actions">
+                    <div class="row">
+                        <div class="col">
+                            <form id="add-to-cart-form" action="/item/add_to_cart/{{ item.id }}" method="post">
+                                <input id="add-cart-item-id" type="hidden" name="add-cart-item-id" value="{{ item.id }}">
+                                <button style="display: {{ hide_add_button }}" id="add-to-cart" type="submit" class="btn btn-pink btn-sm"> <i class="fas fa-plus"></i> <i class="fas fa-shopping-cart"></i></button>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <form id="remove-from-cart-form" action="/item/remove_from_cart/{{ item.id }}" method="post">
+                                <input id="remove-cart-item-id" type="hidden" name="remove-cart-item-id" value="{{ item.id }}">
+                                <button style="display: {{ hide_remove_button }}" id="remove-from-cart" type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> <i class="fas fa-shopping-cart"></i></button>
+                            </form>
+                        </div>
+                        <div class="col float-sm-right">
+                            <a href="/items/checkout" class="btn btn-pink mr-2 ml-2 btn-sm">Checkout</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

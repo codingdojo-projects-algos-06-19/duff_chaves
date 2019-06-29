@@ -18,6 +18,7 @@
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="msapplication-config" content="{{ url_for('static',filename='img/browserconfig.xml') }}">
         <meta name="theme-color" content="#ffffff">
+        <script src="https://js.stripe.com/v3"></script>
         {% block head %}{% endblock %}
         <title>{% block title %}{% endblock %}</title>
     </head>
@@ -30,6 +31,17 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                     <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="/items/checkout" class="nav-link waves-effect">
+                                {% if items_in_cart %}
+                                <span class="badge red z-depth-1 mr-1"> {{ items_in_cart }} </span>
+                                {% else %}
+                                <span class="badge red z-depth-1 mr-1"> 0 </span>
+                                {% endif %}
+                                <i class="fas fa-shopping-cart"></i>
+                                <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link waves-effect waves-light" href="/">Home</a>
                         </li>

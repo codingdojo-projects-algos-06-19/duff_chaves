@@ -1,0 +1,81 @@
+{% extends './layout.html' %}
+{% block title %}Shopping Cart - CoolBand {% endblock %}
+{% block body %}
+    <main>
+        <div class="container">
+            <div class="text-center py-5">
+                <h1 class="h1 pink-text"><i class="fas fa-tags"></i> Shopping Cart</h1>
+            </div>
+            {% if items_in_cart %}
+            <div class="row">
+                <div class="table-responsive mb-5">
+                    <table class="table">
+                        <tbody>
+                            <!-- <thead>
+                                <th></th>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>View Item</th>
+                            </thead> -->
+                        {% for item in items_of_user %}
+                            <tr>
+                                <!--Images from https://picsum.photos/-->
+                                <td>
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <p><a href="/item/view/{{ item.id }}"><img width="100" src="{{ item.img_url }}" alt="{{ item.description }}" class="img-fluid"></a></p>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <p><strong>SKU: </strong> {{ item.id }}</p>
+                                            <p><strong>Name: </strong>{{ item.name }}</p>
+                                            <p><strong>description: </strong>{{ item.description | truncate(50) }}...</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td><strong>{{ "$%.2f"|format(item.price) }} </strong></td>
+                                <td>                                
+                                    <span class="mr-2"><a class="btn btn-pink btn-sm" href="/item/view/{{ item.id }}">View</a></span>
+                                </td>
+                                <td>
+                                    <form id="remove-from-cart-form" action="/item/remove_from_cart/{{ item.id }}" method="post">
+                                        <input id="remove-cart-item-id" type="hidden" name="remove-cart-item-id" value="{{ item.id }}">
+                                        <button style="margin-top: -1px" id="remove-from-cart" type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="border-top">
+                            <td class="border-0"></td>
+                            <td class="border-0"></td>
+                            <td class="border-0"></td>
+
+                            <td class="float-right border-0">
+                                <p class="float-right">
+                                    Total: <strong>{{ "$%.2f" | format(sum_items_in_cart) }}</strong>
+                                </p>
+                                <p class="float-right">
+                                    <form action="/#/{{ '$%.2f' | format(sum_items_in_cart) }}" method="post">
+                                        <button type="submit" class="btn btn-pink">Submit Order</button>
+                                    </form>
+                                </p>
+                            </td>
+
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table>
+
+                    </table>
+                </div>
+            </div>
+            {% else %}
+            <div class="text-center py-5">
+                    <div class="col-lg-12">
+                        <p>There are no items available.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+{% endblock %}

@@ -2,6 +2,7 @@ from flask import session
 from config import db, bcrypt
 from sqlalchemy.sql import func
 import re
+from server.models.users_cart_items import users_cart_items
 
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
 
@@ -21,6 +22,7 @@ class User(db.Model):
     postal_code = db.Column(db.String(25))
     created_at = db.Column(db.DateTime, server_default=func.now())
     updated_at = db.Column(db.DateTime, server_default=func.now(), onupdate=func.now())
+    items_for_cart = db.relationship('Item', secondary=users_cart_items)
 
     @classmethod
     def validate(cls, form):

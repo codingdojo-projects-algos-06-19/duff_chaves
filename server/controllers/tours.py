@@ -8,7 +8,9 @@ def tours():
     if 'user_id' in session:
         logged_in_user = User.query.get(session['user_id'])
         tours = Tour.query.all()
-        return render_template('tours.html', logged_in_user=logged_in_user, tours=tours)
+        items_of_user = logged_in_user.items_for_cart
+        items_in_cart = len(items_of_user)
+        return render_template('tours.html', logged_in_user=logged_in_user, tours=tours, items_in_cart=items_in_cart, items_of_user=items_of_user)
     else:
         tours = Tour.query.all()
         return render_template('tours.html', tours=tours)
@@ -19,20 +21,26 @@ def admin_tours_list():
     else:
         logged_in_user = User.query.get(session['user_id'])
         if logged_in_user.approval_id == 9:
+            items_of_user = logged_in_user.items_for_cart
+            items_in_cart = len(items_of_user)
             tours = Tour.query.order_by(desc(Tour.id))
             print('TOURS: ', tours)
             return render_template('admin_tours_list.html', 
                                     logged_in_user=logged_in_user,
-                                    tours=tours
+                                    tours=tours,
+                                    items_in_cart=items_in_cart,
+                                    items_of_user=items_of_user
                                     )
 def admin_add_tours():
     if 'user_id' not in session:
         return render_template('page_not_found.html')
     logged_in_user = User.query.get(session['user_id'])
+    items_of_user = logged_in_user.items_for_cart
+    items_in_cart = len(items_of_user)
     if logged_in_user.approval_id == 9:
-        return render_template('admin_add_tours.html', logged_in_user=logged_in_user)
+        return render_template('admin_add_tours.html', logged_in_user=logged_in_user, items_in_cart=items_in_cart, items_of_user=items_of_user)
     else:
-        return render_template('page_not_found.html', logged_in_user=logged_in_user)
+        return render_template('page_not_found.html', logged_in_user=logged_in_user, items_in_cart=items_in_cart, items_of_user=items_of_user)
 
 def admin_tour_create():
     alerts = []
@@ -99,11 +107,13 @@ def admin_tour_edit(id):
     if 'user_id' not in session:
         return render_template('page_not_found.html')
     logged_in_user = User.query.get(session['user_id'])
+    items_of_user = logged_in_user.items_for_cart
+    items_in_cart = len(items_of_user)
     if logged_in_user.approval_id == 9:
         tour = Tour.query.get(id)
-        return render_template('admin_tour_edit.html', logged_in_user=logged_in_user, tour=tour)
+        return render_template('admin_tour_edit.html', logged_in_user=logged_in_user, tour=tour, items_in_cart=items_in_cart, items_of_user=items_of_user)
     else:
-        return render_template('page_not_found.html', logged_in_user=logged_in_user)
+        return render_template('page_not_found.html', logged_in_user=logged_in_user, items_in_cart=items_in_cart, items_of_user=items_of_user)
 
 def admin_tour_update(id):
     alerts = []

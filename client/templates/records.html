@@ -7,37 +7,30 @@
             <h1 class="h1 pink-text"><i class="fas fa-volume-up"></i> Listen</h1>
         </div>
         <section class="mt-5 wow fadeIn">
+            {% for item in items %}
             <div class="row">
                 <div class="col-md-5 mb-4">
-                    <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-main.jpg" class="img-fluid z-depth-1-half" alt=""/>
+                    <img src="{{ item.img_url }}" class="img-fluid z-depth-1-half" alt=""/>
                 </div>
                 <div class="col-md-7 mb-4">
-                    <h3 class="h3 mb-3">New Record Released</h3>
-                    <p> Lorem ipsum dolor sit, amet consectetur <strong>adipisicing</strong></p>
-                    <a target="_blank" href="#" class="btn btn-pink btn-rounded btn-md">
-                        Add to Cart<i class="fas fa-shopping-cart ml-1"></i>
-                    </a>
-                    <a target="_blank" href="#" class="btn btn-pink btn-rounded btn-md">
-                        Listen <i class="fas fa-volume-up ml-1"></i>
-                    </a>
+                    <h3 class="h3 mb-3">{{ item.name }}</h3>
+                    <p> {{ item.description }}</p>
+                    <div class="btn-group" role="group" aria-label="actions">
+                        <div class="song-player"></div>
+                        <form class="mt-2 ml-2" id="add-to-cart-form" action="/item/add_to_cart/{{ item.id }}" method="POST">
+                            <input id="add-cart-item-id" type="hidden" name="add-cart-item-id" value="{{ item.id }}">
+                            <button style="display: {{ hide_add_button }}" id="add-to-cart" type="submit" class="btn btn-pink btn-rounded btn-md"> Add to Cart<i class="fas fa-shopping-cart ml-1"></i></button>
+                        </form>
+                        <!-- <form id="song-play" action="/song/play" method="POST">
+                            <button type="submit" class="ml-3 btn btn-pink btn-rounded btn-md">
+                                Listen <i class="fas fa-volume-up ml-1"></i>
+                            </button>
+                        </form> -->
+                    </div>
                 </div>
             </div>
             <hr class="py-3"/>
-            <div class="row">
-                <div class="col-md-5 mb-4">
-                    <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-main.jpg" class="img-fluid z-depth-1-half" alt=""/>
-                </div>
-                <div class="col-md-7 mb-4">
-                    <h3 class="h3 mb-3">Best Seller</h3>
-                    <p> Lorem ipsum dolor sit, amet consectetur <strong>adipisicing</strong></p>
-                    <a target="_blank" href="#" class="btn btn-pink btn-rounded btn-md">
-                        Add to Cart<i class="fas fa-shopping-cart ml-1"></i>
-                    </a>
-                    <a target="_blank" href="#" class="btn btn-pink btn-rounded btn-md">
-                        Listen <i class="fas fa-volume-up ml-1"></i>
-                    </a>
-                </div>
-            </div>
+            {% endfor %}
         </section>
     </div>
 </main>

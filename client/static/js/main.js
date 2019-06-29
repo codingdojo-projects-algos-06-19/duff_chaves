@@ -190,8 +190,8 @@ $(document).ready(function() {
             method: 'POST',
             data: $('#admin-tour-delete-form').serialize(),
             success: function(alerts) {
-                $('#btn-tour-delete').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Deleting...').addClass('disabled');
-                console.log('SUCCESS')
+                // $('#btn-tour-delete').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Deleting...').addClass('disabled');
+                console.log('REMOVED ITEM')
                 $("#alerts-info").html(alerts)
                 setTimeout("window.location.replace('/admin/tours');",2000);
             },
@@ -200,11 +200,82 @@ $(document).ready(function() {
                 $("#alerts").html(data.responseText)
             }
         })
-    });   
+    });
+    $('#add-to-cart-form').submit(function(e) {
+        // $('#add-to-cart').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>').addClass('disabled');
+        // function loading(message) {
+        //     append_html = setTimeout(function(){  }, 3000);
+        //     return append_html
+        //   }
+       // var FORM_ITEM_CART_ID = $('input[name="add-cart-item-id"]').val();
+        // e.preventDefault()
+        // $.ajax({
+        //     url: '/item/add_to_cart/' + FORM_ITEM_CART_ID,
+        //     method: 'POST',
+        //     data: $('#add-to-cart-form').serialize(),
+        //     success: function() {
+        //         console.log('ADDED ITEM')
+                // var $this = $('#add-to-cart');
+                // $this.html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Adding...');
+                // $this.attr('disabled', true);
+                // setTimeout(function() { 
+                //     $this.attr('disabled', false);
+                //     $this.hide();
+                // }, 4000);
+            //     $('#remove-from-cart').show(0).delay(2000)
+            //     $('#add-to-cart').hide(0).delay(2000)
+            // },
+            // error: function(data) {
+            //     console.log('ERROR')
+            //     $("#alerts").html(data.responseText)
+            // }
+    });
+    $('#remove-from-cart-form').submit(function(e) {
+        // var FORM_ITEM_CART_ID = $('input[name="remove-cart-item-id"]').val();
+        // e.preventDefault()
+        // $.ajax({
+        //     url: '/item/remove_from/' + FORM_ITEM_CART_ID,
+        //     method: 'POST',
+        //     data: $('#remove-from-cart-form').serialize(),
+        //     success: function() {
+        //         console.log('REMOVED ITEM')
+                // var $this2 = $('#remove-from-cart');
+                // $this2.html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Removing...');
+                // $this2.attr('disabled', true);
+                // setTimeout(function() { 
+                //     $this2.attr('disabled', false);
+                //     $this2.hide();
+                // }, 4000);
+    //             $("#add-to-cart").show(0).delay(2000);
+    //             $("#remove-from-cart").hide(0).delay(2000);
+    //         },
+    //         error: function(data) {
+    //             console.log('ERROR')
+    //             $("#alerts").html(data.responseText)
+    //         }
+    //     })
+    });
+    $.get('/song/play', function(player_html){
+        console.log('PLAYER: ', player_html)
+        $('.song-player').html('<audio controls src="' + player_html + '"></audio>');
+    });
+
     $.get('/player', function(player_html){
         console.log('PLAYER: ', player_html)
         $('#player').html('<audio controls src="' + player_html + '"></audio>');
     });
+   
+    //Make the footer stick to the bottom of the page.
+    // function setBodyForFooter() {
+    //     $("#footer").show();
+    //     $("body").css("margin-bottom", parseInt($("#footer").css("height") + "px"));
+    // }
+    // $(window).on('load', function(){
+    //     setBodyForFooter();
+    // });
+    // $(window).resize(function () {
+    //     setBodyForFooter();
+    // });
     // SC.initialize({
     //     client_id: 'FvkgucGq5QyPAepKyYOUkjEQq2zLVKPb'
     //   });      

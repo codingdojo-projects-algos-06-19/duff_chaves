@@ -3,6 +3,7 @@ from sqlalchemy.sql import func
 from server.models.users import User
 from server.models.orders import Order
 from server.models.orders_items import orders_items
+from server.models.users_cart_items import users_cart_items
 
 class Item(db.Model):
     __tablename__ = 'items'
@@ -20,4 +21,5 @@ class Item(db.Model):
     # One User to Many Item
     fkey_item_user_id = db.Column(db.Integer, db.ForeignKey('users.id')) # Tested and Working
     fkey_item_user = db.relationship('User', foreign_keys=[fkey_item_user_id], backref="fkey_item_user_backref") # Tested and Working
-
+    # Many Item to Many User / Shopping Kart
+    users_for_cart = db.relationship('User', secondary=users_cart_items)

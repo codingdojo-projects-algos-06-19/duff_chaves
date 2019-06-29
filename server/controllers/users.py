@@ -1,4 +1,5 @@
 from flask import render_template, request, redirect, session, url_for, flash
+from server.models.items import Item
 from server.models.users import User
 from config import bcrypt, db, IntegrityError, desc
 import re
@@ -34,17 +35,29 @@ def thankyou():
     if 'user_id' not in session:
         return render_template('register.html')
     else:
+        logged_in_user = User.query.get(session['user_id'])
+        item = Item.query.all()
+        items_of_user = logged_in_user.items_for_cart
+        items_in_cart = len(items_of_user)
         return render_template('thankyou.html', 
         user_list=User.query.all(), 
-        logged_in_user=User.query.get(session['user_id'])
+        logged_in_user=logged_in_user,
+        items_in_cart=items_in_cart,
+        items_of_user=items_of_user
         )
 
 def login():
     if 'user_id' in session:
-        print('SESSION_ID: ', session['user_id'])
+        logged_in_user = User.query.get(session['user_id'])
+        item = Item.query.all()
+        items_of_user = logged_in_user.items_for_cart
+        items_in_cart = len(items_of_user)
+        print(items_in_cart)
         return render_template('welcome.html', 
         user_list=User.query.all(), 
-        logged_in_user=User.query.get(session['user_id'])
+        logged_in_user=logged_in_user,
+        items_in_cart=items_in_cart,
+        items_of_user=items_of_user
         )
     else:
         return render_template('login.html')
@@ -193,10 +206,16 @@ def process_login():
 def welcome():
     if 'user_id' not in session:
        return redirect('/user/login')
-    print('session user id: ', session['user_id'])
+    logged_in_user = User.query.get(session['user_id'])
+    item = Item.query.all()
+    items_of_user = logged_in_user.items_for_cart
+    items_in_cart = len(items_of_user)
     return render_template('welcome.html', 
     user_list=User.query.all(), 
-    logged_in_user=User.query.get(session['user_id']))
+    logged_in_user=logged_in_user,
+    items_of_user=items_of_user,
+    items_in_cart=items_in_cart
+    )
 
 def logout():
     alerts = []
@@ -209,20 +228,26 @@ def user_list():
         return render_template('page_not_found.html')
     logged_in_user = User.query.get(session['user_id'])
     user_list = User.query.order_by(desc(User.id))
+    item = Item.query.all()
+    items_of_user = logged_in_user.items_for_cart
+    items_in_cart = len(items_of_user)
     if logged_in_user.approval_id == 9:
-        return render_template('users_list.html', logged_in_user=logged_in_user, user_list=user_list)
+        return render_template('users_list.html', logged_in_user=logged_in_user, user_list=user_list, items_in_cart=items_in_cart, items_of_user=items_of_user)
     else:
-        return render_template('page_not_found.html', logged_in_user=logged_in_user, user_list=user_list)
+        return render_template('page_not_found.html', logged_in_user=logged_in_user, user_list=user_list, items_in_cart=items_in_cart, items_of_user=items_of_user)
 
 def admin_edit(id):
     if 'user_id' not in session:
         return render_template('page_not_found.html')
     logged_in_user = User.query.get(session['user_id'])
     user_to_update = User.query.get(id)
+    item = Item.query.all()
+    items_of_user = logged_in_user.items_for_cart
+    items_in_cart = len(items_of_user)
     if logged_in_user.approval_id == 9:
-        return render_template('admin_user_edit.html', logged_in_user=logged_in_user, user=user_to_update)
+        return render_template('admin_user_edit.html', logged_in_user=logged_in_user, user=user_to_update, items_in_cart=items_in_cart, items_of_user=items_of_user)
     else:
-        return render_template('page_not_found.html', logged_in_user=logged_in_user, user_list=user_list)
+        return render_template('page_not_found.html', logged_in_user=logged_in_user, user_list=user_list, items_in_cart=items_in_cart, items_of_user=items_of_user)
 
 def admin_update(id):
     alerts = []

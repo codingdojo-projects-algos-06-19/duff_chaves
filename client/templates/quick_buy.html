@@ -1,0 +1,95 @@
+{% extends './layout.html' %}
+{% block title %}Quick buy - CoolBand {% endblock %}
+{% block body %}
+<main>
+    <div class="container">
+        <div class="text-center py-5">
+            <h1 class="h1 pink-text"><i class="fas fa-volume-up"></i> Quick Buy</h1>
+        </div>
+        <section class="mt-5 wow fadeIn">
+            <div class="row">
+                <div class="col-sm-12">
+                        <button
+                        style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
+                        id="checkout-button-sku_FLPja03GMTVVn2"
+                        role="link"
+                      >
+                        Checkout
+                      </button>
+                      
+                      <script>
+                        var stripe = Stripe('pk_test_y5eOOiNGOJoOtD5tdTNQl3YP00k4wpKNeG');
+                      
+                        var checkoutButton = document.getElementById('checkout-button-sku_FLPja03GMTVVn2');
+                        checkoutButton.addEventListener('click', function () {
+                          // When the customer clicks on the button, redirect
+                          // them to Checkout.
+                          stripe.redirectToCheckout({
+                            items: [{sku: 'sku_FLPja03GMTVVn2', quantity: 1}],
+                      
+                            // Do not rely on the redirect to the successUrl for fulfilling
+                            // purchases, customers may not always reach the success_url after
+                            // a successful payment.
+                            // Instead use one of the strategies described in
+                            // https://stripe.com/docs/payments/checkout/fulfillment
+                            successUrl: 'https://your-website.com/success',
+                            cancelUrl: 'https://your-website.com/canceled',
+                          })
+                          .then(function (result) {
+                            if (result.error) {
+                              // If `redirectToCheckout` fails due to a browser or network
+                              // error, display the localized error message to your customer.
+                              var displayError = document.getElementById('error-message');
+                              displayError.textContent = result.error.message;
+                            }
+                          });
+                        });
+                      </script>
+
+<button
+  style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
+  id="checkout-button-sku_FLPjFSiwhTw7HA"
+  role="link">
+  Checkout
+</button>
+
+
+<script>
+  var stripe = Stripe('pk_test_y5eOOiNGOJoOtD5tdTNQl3YP00k4wpKNeG');
+
+  var checkoutButton = document.getElementById('checkout-button-sku_FLPjFSiwhTw7HA');
+  checkoutButton.addEventListener('click', function () {
+    // When the customer clicks on the button, redirect
+    // them to Checkout.
+    stripe.redirectToCheckout({
+      items: [{sku: 'sku_FLPjFSiwhTw7HA', quantity: 1}],
+
+      // Do not rely on the redirect to the successUrl for fulfilling
+      // purchases, customers may not always reach the success_url after
+      // a successful payment.
+      // Instead use one of the strategies described in
+      // https://stripe.com/docs/payments/checkout/fulfillment
+      successUrl: 'https://your-website.com/success',
+      cancelUrl: 'https://your-website.com/canceled',
+    })
+    .then(function (result) {
+      if (result.error) {
+        // If `redirectToCheckout` fails due to a browser or network
+        // error, display the localized error message to your customer.
+        var displayError = document.getElementById('error-message');
+        displayError.textContent = result.error.message;
+      }
+    });
+  });
+</script>
+
+
+
+
+                </div>
+            </div>
+        </section>
+    </div>
+</main>
+    
+{% endblock %}
