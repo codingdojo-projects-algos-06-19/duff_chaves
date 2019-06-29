@@ -1,0 +1,33 @@
+{% extends './layout.html' %}
+{% block title %}{{ tour.venue_name }} - CoolBand {% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="text-center py-5">
+            <h1 class="h1 pink-text"><i class="fas fa-tag"></i> Event Details</h1>
+        </div>
+        <div class="row mb-4 wow fadeIn">
+            <div class="col-md-6 mb-4">
+                <img src="{{ tour.event_img }}" class="img-fluid z-depth-1-half" alt="">
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="mb-4">
+                    <a class="btn btn-sm btn-pink" href="{{ request.referrer }}">Back</a>
+                </div>
+                {% if logged_in_user.approval_id == 9 %}
+                <h3 class="h3 mb-3">{{ tour.venue_name }} <span class="mr-2"><a href="/admin/tour/{{ tour.id }}/edit"><i class="fa fa-edit fa-sm pink-text"></i></a></span></h3>
+                {% else %}
+                <h3 class="h3 mb-3">{{ tour.venue_name }} </h3>
+                {% endif %}
+                <h6 class="mb-3">Date: {{ tour.event_date }}</h6>
+                <p>{{ tour.description }}</p>
+                <h6 class="mb-3">Address: {{ tour.venue_address }}</h6>
+                <h6 class="mb-3">City: {{ tour.venue_city }}</h6>
+                <h6 class="mb-3">State: {{ tour.venue_state }}</h6>
+                <h6 class="mb-3">Country: {{ tour.venue_country }}</h6>
+                <h6 class="mb-3">Phone: {{ tour.venue_phone }}</h6>
+                <h6 class="small mb-3">Date Added: {{ tour.created_at.strftime('%Y-%m-%d') }}</h6>
+                <hr>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

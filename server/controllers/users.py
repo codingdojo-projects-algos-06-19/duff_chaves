@@ -220,8 +220,8 @@ def welcome():
 def logout():
     alerts = []
     session.pop('user_id', None)
-    #alerts = flash('Thanks for using our site!')
-    return redirect('login')
+    # alerts.append('Thanks for using our site!')
+    return redirect('/')
 
 def user_list():
     if 'user_id' not in session:

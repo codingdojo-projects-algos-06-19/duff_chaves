@@ -5,14 +5,14 @@ from server.models.users import User
 import stripe
 
 def items():
+    items = Item.query.join(User, Item.fkey_item_user_id==User.id).add_columns(Item.id, Item.name, Item.description, Item.img_url, Item.price, User.first_name, User.last_name, Item.created_at, Item.updated_at).order_by(desc(Item.id))
     if 'user_id' in session:
         logged_in_user = User.query.get(session['user_id'])
-        items = Item.query.join(User, Item.fkey_item_user_id==User.id).add_columns(Item.id, Item.name, Item.description, Item.img_url, Item.price, User.first_name, User.last_name, Item.created_at, Item.updated_at).order_by(desc(Item.id))
         items_of_user = logged_in_user.items_for_cart
         items_in_cart = len(items_of_user)
         return render_template('items_list.html', logged_in_user=logged_in_user, items=items, items_in_cart=items_in_cart, items_of_user=items_of_user)
     else:
-        return render_template('items_list.html')
+        return render_template('items_list.html', items=items)
 
 def quick_buy():
     if 'user_id' in session:
@@ -38,9 +38,9 @@ def quick_buy():
 #         return render_template('/partials/alerts.html')
 
 def view(id):
+    item = Item.query.get(id)
     if 'user_id' in session:
         logged_in_user = User.query.get(session['user_id'])
-        item = Item.query.get(id)
         # item_in_cart = logged_in_user.items_for_cart
         # item_in_cart = User.query.filter(User.items_for_cart.any(id=id)).filter_by()
         items_of_user = logged_in_user.items_for_cart
@@ -48,7 +48,8 @@ def view(id):
 
         return render_template('item_view.html', logged_in_user=logged_in_user, item=item, items_of_user=items_of_user, items_in_cart=items_in_cart)
     else:
-        return render_template('item_view.html') 
+        logged_in_user = 0
+        return render_template('item_view.html', item=item, logged_in_user=logged_in_user) 
 
 def admin_items_list():
     if 'user_id' not in session:

@@ -15,17 +15,16 @@
                 <div class="col-md-7 mb-4">
                     <h3 class="h3 mb-3">{{ item.name }}</h3>
                     <p> {{ item.description }}</p>
+                    <div class="song-player"></div>
                     <div class="btn-group" role="group" aria-label="actions">
-                        <div class="song-player"></div>
+                        {% if 'user_id' in session %}
                         <form class="mt-2 ml-2" id="add-to-cart-form" action="/item/add_to_cart/{{ item.id }}" method="POST">
                             <input id="add-cart-item-id" type="hidden" name="add-cart-item-id" value="{{ item.id }}">
-                            <button style="display: {{ hide_add_button }}" id="add-to-cart" type="submit" class="btn btn-pink btn-rounded btn-md"> Add to Cart<i class="fas fa-shopping-cart ml-1"></i></button>
+                            <button style="display: {{ hide_add_button }}" id="add-to-cart" type="submit" class="btn btn-pink btn-rounded btn-md"> Add to Cart<i class="fas fa-shopping-cart"></i></button>
                         </form>
-                        <!-- <form id="song-play" action="/song/play" method="POST">
-                            <button type="submit" class="ml-3 btn btn-pink btn-rounded btn-md">
-                                Listen <i class="fas fa-volume-up ml-1"></i>
-                            </button>
-                        </form> -->
+                        {% else %}
+                            <a href="/item/view/{{ item.id }}" class="btn btn-pink btn-rounded btn-md mt-2"> View</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>

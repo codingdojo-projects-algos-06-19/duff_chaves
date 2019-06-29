@@ -75,8 +75,6 @@ def checkout():
         sum_items_in_cart = 0
         for item in items_of_user:
             sum_items_in_cart += item.price
-        print('SUM OF ITEMS: ', sum_items_in_cart)
-
         return render_template('shopping_cart.html', items_of_user=items_of_user, items_in_cart=items_in_cart, logged_in_user=logged_in_user, items=items, sum_items_in_cart=sum_items_in_cart)
     else:
         return render_template('page_not_found.html')

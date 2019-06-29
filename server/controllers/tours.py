@@ -2,6 +2,7 @@ from flask import render_template, request, redirect, session, url_for, flash
 from config import db, IntegrityError, desc, func
 from server.models.tours import Tour
 from server.models.users import User
+from server.models.items import Item
 from datetime import datetime
 
 def tours():
@@ -14,6 +15,18 @@ def tours():
     else:
         tours = Tour.query.all()
         return render_template('tours.html', tours=tours)
+
+def view(id):
+    tour = Tour.query.get(id)
+    if 'user_id' in session:
+        logged_in_user = User.query.get(session['user_id'])
+        items_of_user = logged_in_user.items_for_cart
+        items_in_cart = len(items_of_user)
+        return render_template('tour_view.html', logged_in_user=logged_in_user, tour=tour, items_in_cart=items_in_cart, items_of_user=items_of_user)
+    else:
+        logged_in_user = 0
+        tours = Tour.query.all()
+        return render_template('tour_view.html', tour=tour, logged_in_user=logged_in_user)
 
 def admin_tours_list():
     if 'user_id' not in session:

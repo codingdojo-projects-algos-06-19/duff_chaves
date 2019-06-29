@@ -5,16 +5,16 @@ from server.models.items import Item
 import soundcloud
 
 def records():
+    items = Item.query.filter_by(category='Songs')
     if 'user_id' in session:
         logged_in_user = User.query.get(session['user_id'])
-        items = Item.query.filter_by(category='Songs')
         items_of_user = logged_in_user.items_for_cart
         items_in_cart = len(items_of_user)
         for song  in items:
             print('SONG: ', song)
         return render_template('records.html', logged_in_user=logged_in_user, items_in_cart=items_in_cart, items_of_user=items_of_user, items=items)
     else:
-        return render_template('records.html')
+        return render_template('records.html', items=items)
 
 def play():
     client = soundcloud.Client(client_id='FvkgucGq5QyPAepKyYOUkjEQq2zLVKPb')
