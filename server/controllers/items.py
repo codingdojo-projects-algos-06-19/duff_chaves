@@ -22,8 +22,8 @@ def quick_buy():
         items_in_cart = len(items_of_user)
         return render_template('quick_buy.html', logged_in_user=logged_in_user, items=items, items_in_cart=items_in_cart, items_of_user=items_of_user)
     else:
-        flash('Please sign-in or register to proceed!')
-        return render_template('/quick-buy')
+        # flash('Please sign-in or register to proceed!')
+        return render_template('quick_buy.html')
 
 # def remove_from(id):
 #     removeUser = User.query.get(session['user_id'])

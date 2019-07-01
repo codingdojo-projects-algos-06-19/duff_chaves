@@ -22,11 +22,11 @@
                     {% for order in orders %}
                         <tr>
                             <td><small>{{ order.id }}</small></td>
-                            <td><small>{{ order.created_at }}</small></td>
+                            <td><small>{{ order.created_at.strftime('%Y-%m-%d') }}</small></td>
                             <td><small>{{ order.first_name + ' ' + order.last_name }}</small></td>
-                            <td><small>{{ order.total }}</small></td>
-                            <td><small>{{ order.paid }}</small></td>
-                            <td><small>{{ order.balance }}</small></td>
+                            <td><small>{{ "$%.2f"|format(order.amount) }}</small></td>
+                            <td><small>{{ "$%.2f"|format(order.amount) }}</small></td>
+                            <td><small>{{ "$%.2f"|format(order.amount - order.amount) }}</small></td>
                         </tr>
                     {% endfor %}
                     </tbody>

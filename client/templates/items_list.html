@@ -13,10 +13,14 @@
                         <img src="{{ item.img_url }}" class="img-fluid z-depth-1-half" alt=""/>
                     </div>
                     <div class="col-md-7 mb-4">
+                        {% if 'user_id' not in session %}
+                        <a href="/item/view/{{ item.id }}" class="grey-text"><h3>{{ item.name }} <span class="badge badge-pill danger-color">NEW</span></h3></a>
+                        {% else %}
                         {% if item.name == 'Fan Club Membership' or item.name == 'Cool Band 10 Year Collection DVD'%}
                         <a href="/merch/quick_buy" class="grey-text"><h3>{{ item.name }} <span class="badge badge-pill danger-color">QUICK BUY</span></h3></a>
                         {% else %}
                         <a href="/item/view/{{ item.id }}" class="grey-text"><h3>{{ item.name }} <span class="badge badge-pill danger-color">NEW</span></h3></a>
+                        {% endif %}
                         {% endif %}
                         <p class="mb-2"> {{ item.description }}</p>
                         <h4 class="font-weight-bold blue-text"><strong>${{ item.price }} </strong></h4>

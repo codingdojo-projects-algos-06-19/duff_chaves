@@ -27,19 +27,14 @@ def admin_orders_list():
         items_of_user = logged_in_user.items_for_cart
         items_in_cart = len(items_of_user)
         if logged_in_user.approval_id == 9:
-            orders = Order.query.all()
+            orders = Order.query.join(User, Order.fkey_order_user_id==User.id).add_columns(Order.id, Order.amount, User.first_name, User.last_name, Order.created_at, Order.updated_at).order_by(desc(Order.id))
+            # orders = Order.query.order_by(desc(Order.id)).all()
             print('ORDERS', orders)
-            total = 100
-            paid = 0
-            subtotal = total - paid
             return render_template('admin_orders_list.html', 
                                     logged_in_user=logged_in_user,
                                     items_in_cart=items_in_cart,
                                     items_of_user=items_of_user,
                                     orders=orders,
-                                    total=total, 
-                                    paid=paid, 
-                                    subtotal=subtotal
                                     )
 
 def process_checkout():
