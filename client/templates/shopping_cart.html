@@ -80,10 +80,10 @@
             stripe.redirectToCheckout({
             items: [{sku: 'sku_FLPja03GMTVVn2', quantity: 1}],
     
-            // successUrl: 'http://collband.com/user/process_quick_buy/9',
-            // cancelUrl: 'http://collband.com/merch/quick_buy',
-            successUrl: 'http://localhost:5000/user/process_checkout',
-            cancelUrl: 'http://localhost:5000/items/cart',
+            successUrl: 'http://collband.com/user/process_checkout',
+            cancelUrl: 'http://collband.com/items/cart',
+            // successUrl: 'http://localhost:5000/user/process_checkout',
+            // cancelUrl: 'http://localhost:5000/items/cart',
             })
             .then(function (result) {
             if (result.error) {
