@@ -1,0 +1,75 @@
+{% extends './layout.html' %}
+{% block title %}Receipt - CoolBand {% endblock %}
+{% block body %}
+    <main>
+        <div class="container">
+            <div class="text-center py-5">
+                <h1 class="h1 pink-text"><i class="fas fa-tags"></i> Receipt</h1>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="/user/{{ logged_in_user.id }}/orders" class="hide-from-printing btn btn-pink btn-md float-right">Past Orders</a>
+                    <div class="h5 mt-3 h5">
+                        Order # {{ order.id }} <span><a onclick="printPage()"><i class="fas fa-print fa-lg ml-2"></i></a></span>
+                    </div>
+                    <hr>
+                    <h5 class="h5">Purchase by:</h5>
+                    <p><strong>Name: </strong>{{ logged_in_user.first_name + ' ' + logged_in_user.last_name}}</p>
+                    <p><strong>Address: </strong>{{ logged_in_user.address1 }}</p>
+                    <p><strong>City: </strong>{{ logged_in_user.city }}</p>
+                    <p><strong>State: </strong>{{ logged_in_user.state }}</p>
+                    <p><strong>Postal Code: </strong>{{ logged_in_user.postal_code }}</p>
+                </div>
+                <div class="table-responsive mb-5">
+                    <table class="table">
+                        <tbody>
+                        {% for item in items_in_order %}
+                            <tr>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-sm-2">
+                                            <p><a href="/item/view/{{ item.id }}"><img width="100" src="{{ item.img_url }}" alt="{{ item.description }}" class="img-fluid"></a></p>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <p><strong>SKU: </strong> {{ item.id }}</p>
+                                            <p><strong>Name: </strong>{{ item.name }}</p>
+                                            <p><strong>description: </strong>{{ item.description | truncate(80) }}...</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <p class="float-right">
+                                        <strong>Price: {{ "$%.2f"|format(item.price) }} </strong>
+                                    </p>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="border-top">
+                            <td class="border-0"></td>
+                            <td class="border-0"></td>
+                            <td class="border-0"></td>
+                            <td class="float-right border-0">
+                                <div class="h5">
+                                    <p>Total: <strong>{{ "$%.2f" | format(order.amount) }}</strong></p> 
+                                    <p>Paid: <strong>{{ "$%.2f" | format(order.amount) }}</strong></p>
+                                    <p>Balance: <strong>{{ "$%.2f" | format(order.amount - order.amount) }}</strong></p>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <table>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+    function printPage() {
+        window.print();
+      }
+    </script>
+{% endblock %}

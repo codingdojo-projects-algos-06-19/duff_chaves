@@ -72,6 +72,14 @@ body {
   width: 100%; 
   display: none;
 }	
+@media print {
+  .hide-from-printing {
+    display: none !important;
+  }
+  footer {
+    display: none !important;
+  }
+}
 /* body {
   margin:0;
   padding:0;  

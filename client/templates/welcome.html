@@ -1,17 +1,11 @@
 {% extends './layout.html' %}
 {% block title %}Welcome - Demo App{% endblock %}
 {% block body %}
-    <div class="container">
-        <div class="container flex-center">
-            <div class="row pt-5 mt-3">
-                <div class="col-md-12 pt-3 mb-5">
-                    <div class="intro-info-content text-center mt-5 mb-5">
-                        <h1 class="display-3 mb-5 wow fadeIn" data-wow-delay="0.3s">WELCOME <a class="font-bold">{{ logged_in_user.first_name.capitalize() + '!' }}</a></h1>
-                        <i class="fas fa-smile fa-5x wow shake"></i>
-                        <h5 class="font-up mb-5 mt-1 font-bold wow fadeIn" data-wow-delay="0.3s">We are happy to see you!</h5>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div style="height: 100vh">
+    <div class="flex-center flex-column">
+        <h1 class="animated fadeIn mb-4" data-wow-delay="0.3s">WELCOME <strong>{{ logged_in_user.first_name.capitalize() + '!' }}</strong></h1>
+        <i class="fas fa-smile fa-5x wow shake"></i>
+        <h5 class="animated fadeIn mb-3">We are happy to see you!</h5>
     </div>
+</div>
 {% endblock %}

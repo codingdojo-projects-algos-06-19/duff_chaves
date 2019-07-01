@@ -1,95 +1,103 @@
 {% extends './layout.html' %}
 {% block title %}Quick buy - CoolBand {% endblock %}
 {% block body %}
+<script>
+    var LOGGED_IN_USER = {{ session['user_id'] }}
+</script>
 <main>
     <div class="container">
         <div class="text-center py-5">
-            <h1 class="h1 pink-text"><i class="fas fa-volume-up"></i> Quick Buy</h1>
+            <h1 class="h1 pink-text"><i class="fas fa-tag"></i> Quick Buy</h1>
         </div>
-        <section class="mt-5 wow fadeIn">
-            <div class="row">
-                <div class="col-sm-12">
-                        <button
-                        style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
-                        id="checkout-button-sku_FLPja03GMTVVn2"
-                        role="link"
-                      >
-                        Checkout
-                      </button>
-                      
-                      <script>
-                        var stripe = Stripe('pk_test_y5eOOiNGOJoOtD5tdTNQl3YP00k4wpKNeG');
-                      
-                        var checkoutButton = document.getElementById('checkout-button-sku_FLPja03GMTVVn2');
-                        checkoutButton.addEventListener('click', function () {
-                          // When the customer clicks on the button, redirect
-                          // them to Checkout.
-                          stripe.redirectToCheckout({
-                            items: [{sku: 'sku_FLPja03GMTVVn2', quantity: 1}],
-                      
-                            // Do not rely on the redirect to the successUrl for fulfilling
-                            // purchases, customers may not always reach the success_url after
-                            // a successful payment.
-                            // Instead use one of the strategies described in
-                            // https://stripe.com/docs/payments/checkout/fulfillment
-                            successUrl: 'https://your-website.com/success',
-                            cancelUrl: 'https://your-website.com/canceled',
-                          })
-                          .then(function (result) {
-                            if (result.error) {
-                              // If `redirectToCheckout` fails due to a browser or network
-                              // error, display the localized error message to your customer.
-                              var displayError = document.getElementById('error-message');
-                              displayError.textContent = result.error.message;
-                            }
-                          });
-                        });
-                      </script>
-
-<button
-  style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
-  id="checkout-button-sku_FLPjFSiwhTw7HA"
-  role="link">
-  Checkout
-</button>
-
-
-<script>
-  var stripe = Stripe('pk_test_y5eOOiNGOJoOtD5tdTNQl3YP00k4wpKNeG');
-
-  var checkoutButton = document.getElementById('checkout-button-sku_FLPjFSiwhTw7HA');
-  checkoutButton.addEventListener('click', function () {
-    // When the customer clicks on the button, redirect
-    // them to Checkout.
-    stripe.redirectToCheckout({
-      items: [{sku: 'sku_FLPjFSiwhTw7HA', quantity: 1}],
-
-      // Do not rely on the redirect to the successUrl for fulfilling
-      // purchases, customers may not always reach the success_url after
-      // a successful payment.
-      // Instead use one of the strategies described in
-      // https://stripe.com/docs/payments/checkout/fulfillment
-      successUrl: 'https://your-website.com/success',
-      cancelUrl: 'https://your-website.com/canceled',
-    })
-    .then(function (result) {
-      if (result.error) {
-        // If `redirectToCheckout` fails due to a browser or network
-        // error, display the localized error message to your customer.
-        var displayError = document.getElementById('error-message');
-        displayError.textContent = result.error.message;
-      }
-    });
-  });
-</script>
-
-
-
-
+        <div class="row mb-5">
+            <div class="col-sm-6">
+                <div class="card wow fadeIn">
+                    <div class="view overlay">
+                        <img class="card-img-top" src="https://picsum.photos/id/407/600/400" alt="Card image cap">
+                        <a href="/item/view/9"><div class="mask rgba-white-slight"></div></a>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="card-title">Cool Band 10 Year Collection DVD</h4>
+                        <p class="card-text">Cool Band 10 Year Collection DVD Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</p>
+                        <p>$25</p>
+                        <button class="btn btn-pink btn-lg" id="checkout-button-sku_FLPja03GMTVVn2" role="link">Quick Checkout </button>
+                    </div>
                 </div>
+                <script>
+                    var stripe = Stripe('pk_test_y5eOOiNGOJoOtD5tdTNQl3YP00k4wpKNeG');
+                    var checkoutButton = document.getElementById('checkout-button-sku_FLPja03GMTVVn2');
+                    checkoutButton.addEventListener('click', function () {
+                        // When the customer clicks on the button, redirect
+                        // them to Checkout.
+                        stripe.redirectToCheckout({
+                        items: [{sku: 'sku_FLPja03GMTVVn2', quantity: 1}],
+                    
+                        // Do not rely on the redirect to the successUrl for fulfilling
+                        // purchases, customers may not always reach the success_url after
+                        // a successful payment.
+                        // Instead use one of the strategies described in
+                        // https://stripe.com/docs/payments/checkout/fulfillment
+                        // successUrl: 'http://collband.com/user/process_quick_buy/9',
+                        // cancelUrl: 'http://collband.com/merch/quick_buy',
+                        successUrl: 'http://localhost:5000/user/process_quick_buy/9',
+                        cancelUrl: 'http://localhost:5000/merch/quick_buy',
+                        })
+                        .then(function (result) {
+                        if (result.error) {
+                            // If `redirectToCheckout` fails due to a browser or network
+                            // error, display the localized error message to your customer.
+                            var displayError = document.getElementById('error-message');
+                            displayError.textContent = result.error.message;
+                        }
+                        });
+                    });
+                </script>
             </div>
-        </section>
+            <div class="col-sm-6">
+                <div class="card wow fadeIn">
+                        <div class="view overlay">
+                            <img class="card-img-top" src="https://picsum.photos/id/403/600/400" alt="Card image cap">
+                            <a href="/item/view/10"><div class="mask rgba-white-slight"></div></a>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title">Fan Club Membership</h4>
+                            <p class="card-text">One year membership with 30% discount on all concerts all year long. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.</p>
+                            <p>$ 50</p>
+                            <button class="btn btn-pink btn-lg" id="checkout-button-sku_FLPjFSiwhTw7HA" role="link"> Quick Checkout</button>
+                        </div>
+                    </div>
+                <script>
+                var stripe = Stripe('pk_test_y5eOOiNGOJoOtD5tdTNQl3YP00k4wpKNeG');
+
+                var checkoutButton = document.getElementById('checkout-button-sku_FLPjFSiwhTw7HA');
+                checkoutButton.addEventListener('click', function () {
+                    // When the customer clicks on the button, redirect
+                    // them to Checkout.
+                    stripe.redirectToCheckout({
+                    items: [{sku: 'sku_FLPjFSiwhTw7HA', quantity: 1}],
+
+                    // Do not rely on the redirect to the successUrl for fulfilling
+                    // purchases, customers may not always reach the success_url after
+                    // a successful payment.
+                    // Instead use one of the strategies described in
+                    // https://stripe.com/docs/payments/checkout/fulfillment
+                    // successUrl: 'http://collband.com/user/process_quick_buy/10',
+                    // cancelUrl: 'http://collband.com/merch/quick_buy',
+                    successUrl: 'http://localhost:5000/user/process_quick_buy/10',
+                    cancelUrl: 'http://localhost:5000/user/quick_buy',
+                    })
+                    .then(function (result) {
+                    if (result.error) {
+                        // If `redirectToCheckout` fails due to a browser or network
+                        // error, display the localized error message to your customer.
+                        var displayError = document.getElementById('error-message');
+                        displayError.textContent = result.error.message;
+                    }
+                    });
+                });
+                </script>
+            </div>
+        </div>
     </div>
 </main>
-    
 {% endblock %}

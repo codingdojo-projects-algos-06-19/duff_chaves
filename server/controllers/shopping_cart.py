@@ -4,14 +4,14 @@ from server.models.users import User
 from config import db, desc, IntegrityError
 from sqlalchemy.sql import func
 
-def shopping_cart():
-    if 'user_id' in session:
-        logged_in_user = User.query.get(session['user_id'])
-        items_of_user = logged_in_user.items_for_cart
-        items_in_cart = len(items_of_user)
-        return render_template('shopping_cart.html', items_in_cart=items_in_cart, logged_in_user=logged_in_user, items_of_user=items_of_user)
-    else:
-        return render_template('shopping_cart.html')
+# def shopping_cart():
+#     if 'user_id' in session:
+#         logged_in_user = User.query.get(session['user_id'])
+#         items_of_user = logged_in_user.items_for_cart
+#         items_in_cart = len(items_of_user)
+#         return render_template('shopping_cart.html', items_in_cart=items_in_cart, logged_in_user=logged_in_user, items_of_user=items_of_user)
+#     else:
+#         return render_template('shopping_cart.html')
 
 def add_to_cart(id):
     alerts = []
@@ -66,7 +66,7 @@ def remove_from_cart(id):
         return render_template('/partials/alerts.html')
 
 
-def checkout():
+def shopping_cart():
     if 'user_id' in session:
         logged_in_user = User.query.get(session['user_id'])
         items = Item.query.join(User, Item.fkey_item_user_id==User.id).add_columns(Item.id, Item.name, Item.description, Item.img_url, Item.price, User.first_name, User.last_name, Item.created_at, Item.updated_at).order_by(desc(Item.id))

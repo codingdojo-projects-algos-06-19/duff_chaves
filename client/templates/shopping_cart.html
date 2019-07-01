@@ -11,13 +11,6 @@
                 <div class="table-responsive mb-5">
                     <table class="table">
                         <tbody>
-                            <!-- <thead>
-                                <th></th>
-                                <th>Id</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>View Item</th>
-                            </thead> -->
                         {% for item in items_of_user %}
                             <tr>
                                 <!--Images from https://picsum.photos/-->
@@ -29,11 +22,11 @@
                                         <div class="col-sm-8">
                                             <p><strong>SKU: </strong> {{ item.id }}</p>
                                             <p><strong>Name: </strong>{{ item.name }}</p>
-                                            <p><strong>description: </strong>{{ item.description | truncate(50) }}...</p>
+                                            <p><strong>description: </strong>{{ item.description | truncate(80) }}...</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td><strong>{{ "$%.2f"|format(item.price) }} </strong></td>
+                                <td class="float-right"><strong>{{ "$%.2f"|format(item.price) }} </strong></td>
                                 <td>                                
                                     <span class="mr-2"><a class="btn btn-pink btn-sm" href="/item/view/{{ item.id }}">View</a></span>
                                 </td>
@@ -49,23 +42,23 @@
                             <td class="border-0"></td>
                             <td class="border-0"></td>
                             <td class="border-0"></td>
-
-                            <td class="float-right border-0">
+                            <td class="border-0 float-right">
                                 <p class="float-right">
                                     Total: <strong>{{ "$%.2f" | format(sum_items_in_cart) }}</strong>
                                 </p>
-                                <p class="float-right">
-                                    <form action="/#/{{ '$%.2f' | format(sum_items_in_cart) }}" method="post">
-                                        <button type="submit" class="btn btn-pink">Submit Order</button>
-                                    </form>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border-0"></td>
+                            <td class="border-0"></td>
+                            <td class="border-0"></td>
+                            <td class="float-right border-0">
+                                <p class="border-0">
+                                    <button class="btn btn-pink" id="checkout-button-sku_FLPja03GMTVVn2" role="link">Checkout </button>
                                 </p>
                             </td>
-
                         </tr>
                         </tbody>
-                    </table>
-                    <table>
-
                     </table>
                 </div>
             </div>
@@ -78,4 +71,28 @@
             {% endif %}
         </div>
     </main>
+    <script>
+        var stripe = Stripe('pk_test_y5eOOiNGOJoOtD5tdTNQl3YP00k4wpKNeG');
+        var checkoutButton = document.getElementById('checkout-button-sku_FLPja03GMTVVn2');
+        checkoutButton.addEventListener('click', function () {
+            // When the customer clicks on the button, redirect
+            // them to Checkout.
+            stripe.redirectToCheckout({
+            items: [{sku: 'sku_FLPja03GMTVVn2', quantity: 1}],
+    
+            // successUrl: 'http://collband.com/user/process_quick_buy/9',
+            // cancelUrl: 'http://collband.com/merch/quick_buy',
+            successUrl: 'http://localhost:5000/user/process_checkout',
+            cancelUrl: 'http://localhost:5000/items/cart',
+            })
+            .then(function (result) {
+            if (result.error) {
+                // If `redirectToCheckout` fails due to a browser or network
+                // error, display the localized error message to your customer.
+                var displayError = document.getElementById('error-message');
+                displayError.textContent = result.error.message;
+            }
+            });
+        });
+        </script>
 {% endblock %}
